@@ -1,0 +1,17 @@
+date-format: "dddd, MMMM D, YYYY"
+title-block-banner: true
+author:
+  - name:  Jeison Alarcón
+    url:   https://jeison-alarcon.netlify.app
+    orcid: 0000-0002-1517-7840
+toc: true
+toc-title: Contenido
+toc-location: left
+
+freeze: true
+
+# Default knitr options
+execute:
+  echo: true
+  message: true
+  warning: true

@@ -1,0 +1,32 @@
+project:
+  type: website
+
+  preview:
+    port: 5555
+    browser: true
+    watch-inputs: true
+    navigate: true
+
+website:
+  title: "Python Course"
+  navbar:
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/
+      - icon: twitter
+        href: https://twitter.com
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: false
+    code-link: true
+    anchor-sections: true
+    fig-cap-location: margin
+    reference-location: margin
+    footnotes-hover: true
+    highlight-style: monokai
+
+editor: visual

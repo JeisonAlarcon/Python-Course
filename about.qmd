@@ -1,0 +1,59 @@
+---
+title: "About"
+image: Profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com
+    - icon: github
+      text: Github
+      href: https://github.com
+---
+
+Este curso está diseñado para guiarte desde los conceptos básicos hasta las habilidades intermedias en uno de los lenguajes de programación más poderosos/populares y versátiles de la actualidad. Este curso está orientado tanto a principiantes absolutos en la programación como a aquellos con experiencia en otros lenguajes que deseen expandir sus conocimientos y competencias en Python.
+
+## **Objetivos del Curso**
+
+El objetivo principal de este curso es proporcionar una comprensión sólida de los fundamentos de Python y su aplicación práctica. Al finalizar este curso, los estudiantes serán capaces de:
+
+1.  **Comprender la Sintaxis y Semántica de Python**: Familiarizarse con la estructura básica del lenguaje, incluyendo variables, tipos de datos, operadores y estructuras de control.
+2.  **Escribir y Ejecutar Programas Simples**: Crear scripts que resuelvan problemas cotidianos y automaticen tareas comunes.
+3.  **Manipular Datos**: Trabajar con listas, diccionarios y otros tipos de datos compuestos para gestionar y procesar información de manera eficiente.
+4.  **Desarrollar Habilidades de Resolución de Problemas**: Aplicar técnicas de pensamiento algorítmico para diseñar soluciones efectivas y optimizadas.
+5.  **Introducción a la Programación Orientada a Objetos (POO)**: Entender los conceptos básicos de POO y cómo se implementan en Python.
+6.  **Utilizar Módulos y Paquetes**: Explorar y emplear bibliotecas estándar y de terceros para ampliar las capacidades de tus programas.
+
+## **Estructura del Curso**
+
+El curso está dividido en varios módulos, cada uno centrado en un aspecto fundamental de Python:
+
+1.  **Introducción y Configuración del Entorno**:
+    -   Instalación de Python y configuraciones iniciales.
+    -   Introducción a los entornos de desarrollo integrados (IDE) y editores de texto.
+2.  **Sintaxis Básica y Estructuras de Control**:
+    -   Variables, tipos de datos y operaciones básicas.
+    -   Condicionales, bucles y comprensión de listas.
+3.  **Funciones y Módulos**:
+    -   Definición y uso de funciones.
+    -   Modularización del código con scripts y módulos.
+4.  **Estructuras de Datos Avanzadas**:
+    -   Listas, tuplas, conjuntos y diccionarios.
+    -   Métodos avanzados y manipulación de datos.
+5.  **Programación Orientada a Objetos (POO)**:
+    -   Clases y objetos.
+    -   Herencia, encapsulamiento y polimorfismo.
+6.  **Manejo de Errores y Excepciones**:
+    -   Identificación y gestión de errores (try, except, y finally).
+    -   Uso de excepciones para control de flujo robusto.
+7.  **Interacción con Archivos y Datos**:
+    -   Lectura y escritura de archivos.
+    -   Introducción al manejo de datos con bibliotecas como Pandas.
+8.  **Introducción a Librerías Populares**:
+    -   Uso de librerías esenciales como NumPy, Pandas, Matplotlib, y más.
+    -   Aplicaciones prácticas en ciencia de datos y visualización.
+
+## **Requisitos Previos**
+
+No se requieren conocimientos previos de programación. Sin embargo, se recomienda tener una disposición positiva hacia el aprendizaje y la resolución de problemas.

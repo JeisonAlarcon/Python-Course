@@ -1,0 +1,426 @@
+# ---
+title:   "Getting Started"
+date:    "2024-06-01"
+image:   "Featured Image.jpg"
+jupyter: python3
+from:    markdown+emoji
+categories: [Python Interpreter, Basics, IPython]
+---
+
+# :nerd_face: **CONTEXTO, CONFIGURACIÓN E INTERACCIÓN** :snake:
+
+Este curso es una introducción al trabajo con datos en [Python](https://www.python.org/), ofreciendo una visión general de las principales características de las estructuras de datos y librerías incorporadas para la manipulación de datos.
+
+El enfoque principal del curso es el análisis de datos basados en tablas y la preparación de datos para conjuntos pequeños que puedan manejarse en un ordenador personal. Para utilizar estas herramientas, a veces es necesario organizar los datos desordenados en una forma tabular. Python es ideal para esto, y cuanto más familiarizado esté con el lenguaje y sus tipos de datos, más fácil será preparar los conjuntos de datos para su análisis.
+
+------------------------------------------------------------------------
+
+## :gear: *Configuración Inicial*
+
+### Rstudio
+
+Usaremos la **IDE** de [Rstudio](https://quarto.org/docs/tools/rstudio.html) (*claramente no nos limitaremos a ella, usaremos [Jupyter Notebook](https://jupyter.org/), [VSC](https://quarto.org/docs/tools/vscode.html), [Google Colab](https://colab.research.google.com/), etc*). Pero más adelante trabajaremos con ambos lenguajes (`Python` y `R`) simultáneamente por lo cual nos servirá realizar esta configuración.
+
+1.  Primero necesita conocer con exactitud la ruta del ejecutable `python.exe` :collision: que desea usar (*sea con Python, conda, venv, etc*). Para ello abra la consola de su intérprete (*si usa un environment en particular no olvide ingresar a él* :inbox_tray:) y ejecute los comandos mostrados. Guarde dicha dirección en el portapapeles :paperclip:.
+
+```{python}
+#| eval: false
+python
+import sys
+print(sys.executable)
+```
+
+![](../../files/images/SysExecutable.png)
+
+2.  Ahora que conoce la dirección correcta de su intérprete de Python :card_index:, diríjase a la ruta mostrada en `Rstudio`. :eyes: En ocasiones no le saldrá para ser seleccionado, por eso es mejor tener la ruta, péguela en la casilla y espere unos segundos :watch: que lo reconozca antes de salir y darle guardar o aplicar (*si realiza lo anterior de forma muy rápida no le quedará*). Le pedirá que reinicie sesión y ya deberá quedar si vuelve a ingresar.
+
+![](../../files/images/PyInterpreter.png)
+
+3.  Por último instalaremos una librería que nos proporcionará un conjunto completo de herramientas para la interoperabilidad entre `Python` y `R` :hammer_and_wrench:.
+
+```{python}
+#| eval: false
+install.packages("reticulate")
+```
+
+### Conda
+
+Como usaremos dentro de los `.qmd` el parámetro `jupyter: python3`, es necesario tener instalada dicha librería en su intérprete :computer:, para lo cual ejecute (*dentro de su kernel a usar y environment elegido*):
+
+```{python}
+#| eval: false
+conda install jupyter
+# conda install numpy pandas scikit-learn matplotlib seaborn jupyter
+```
+
+Compruebe que efectivamente haya sido descargado con:
+
+```{python}
+#| eval: false
+conda list
+```
+
+### Quarto
+
+Sí ejecuta el siguiente comando en el terminal :keyboard:, deberá obtener algo como lo siguiente:
+
+```{shell}
+quarto check jupyter
+```
+
+![](../../files/images/CheckJupyter.png)
+
+Como puede observar tenemos un problema :warning: y es que **no quedó** el kernel que elegimos desde un inicio. Y el error mostrado se debe a que obviamente hay módulos que no hemos instalado en dicho intérprete que `Quarto` selecciona por defecto. Si desea obtener más información de dicho error consulte: [Quarto Uses Wrong Python Version](https://github.com/quarto-dev/quarto-cli/discussions/3977).
+
+Para *"corregir"* lo anterior debemos apoyarnos de la [documentación oficial](https://quarto.org/docs/projects/environment.html), la cual indica que se debe crear un archivo `_environment` (*sí así tal cual sin extensión alguna*) y establecer los valores para `QUARTO_PYTHON="C:\ProgramData\miniconda3\"` :heavy_check_mark:. Así conseguimos que `Quarto` pueda establecer y fijar dicha configuración local para nuestro `.qmd`.
+
+-   `QUARTO_PYTHON` se establece en: {{< env QUARTO_PYTHON >}}
+-   `PY_PYTHON` se establece en: {{< env PY_PYTHON >}}
+-   `RETICULATE_PYTHON` se establece en: {{< env RETICULATE_PYTHON >}}
+
+El siguiente [blog](https://eraheem.com/blog/2023/11/20/quarto-jupyter-conda-env-rstudio-config/) :notebook_with_decorative_cover: explica demasiado bien lo que acabamos de hacer a mayor detalle, para renderizar un documento `Quarto` con un entorno específico en `RStudio/Posit`.
+
+:green_circle: Finalmente, cree y ejecute un nuevo `.qmd`, puede utilizar la [plantilla ejemplo](https://quarto.org/docs/computations/python.html#code-blocks), y agregue el siguiente chunk para que verifique por su propia cuenta que, a pesar de que Quarto a nivel global está usando otro interprete, al definir el `_environment` queda con el que usted especifica.
+
+```{python}
+import sys
+print(sys.executable)
+print(sys.prefix)
+print (sys.version)
+```
+
+------------------------------------------------------------------------
+
+## :robot: [*IPython*](https://ipython.readthedocs.io/en/stable)
+
+:bookmark: Cualquier comando estándar de shell puede ser utilizado directamente en `IPython` anteponiendo el carácter `!`. Por ejemplo,
+
+```{python}
+# : ....................... Shell Commands en IPython ........................ :
+!ls
+```
+
+```{python}
+directory = !pwd
+print(directory)
+```
+
+```{python}
+message = "Imprimiendo un texto desde shell"
+!echo {message}
+```
+
+------------------------------------------------------------------------
+
+## :sparkles: *Conceptos Básicos*
+
+-   :triangular_ruler: **Identación (*no llaves* {} )**: Python utiliza espacios en blanco (*tabuladores o espacios*) para estructurar el código en lugar de utilizar llaves como en muchos otros lenguajes como `R` y `C++`.
+-   :symbols: **No se necesita terminar con `;`**: El punto y coma puede usarse para separar múltiples sentencias en una sola línea. `a = 1; b = 2; c = 3`
+-   :label: Las cadenas admiten tanto comillas simples `'` como comillas dobles `"`: Se prefieren las comillas dobles, y para cadenas de varias líneas con saltos de línea, puede utilizar comillas triples `"""`.
+-   :ab: **Vinculación (*binding*)**: En otros lenguajes, la asignación hará que se copien los datos. En Python, hace que se refieran ahora al mismo objeto,
+
+```{python}
+a = [1, 2, 3]
+b = a
+a.append(4)
+b
+```
+
+```{python}
+# Cuando se pasan objetos como argumentos a una función, se crean nuevas variables
+# locales que hacen referencia a los objetos originales sin necesidad de copiarlos
+def myAppend(lista, elemento):
+  lista.append(elemento)
+data = [1, 2, 3]
+myAppend(data, 4)
+data
+```
+
+-   :muscle: **Un lenguaje tipado**: Cada objeto tiene un tipo (*o clase*) específico, con la ventaja de que las variables no tienen un tipo inherente asociado a ellas.
+
+```{python}
+a = 5      ; print(type(a))
+a = "cinco"; print(type(a))
+```
+
+```{python}
+#| eval: false
+"5" + 5
+```
+
+```{python}
+a = 4.5
+b = 2
+print(a / b)
+print(isinstance(a, (int, float)))
+```
+
+### Help & Time
+
+```{python}
+# Acceso a la Documentación:
+help(len)
+```
+
+```{python}
+letra = "a"
+# letra.<Press Tab>
+getattr(letra, "split")
+```
+
+```{python}
+# Guión bajo '_' para salidas anteriores
+1+1
+2+2
+print(_)
+```
+
+```{python}
+# Acceder a las entradas anteriores (historial)
+%history -n 1-3
+```
+
+```{python}
+# : .......................... Timing Code Snippets .......................... :
+%timeit sum(range(100))   # IPython Magic Commands
+```
+
+```{python}
+%%timeit                  # Cuando es más complejo, baja el número de repeticiones
+total = 0
+for i in range(1000):
+  for j in range(1000):
+    total += i * (-1) ** j
+```
+
+### Imports
+
+```{{python}}
+# Modulo.py
+PI = 3.14159
+def cuadrado(x):
+ return x ** 2
+```
+
+```{python}
+#| eval: false
+import Modulo
+print(Modulo.cuadrado(5))
+pi = Modulo.PI
+# ......................................
+from Modulo import PI, cuadrado
+cuadrado(PI)
+# ......................................
+import Modulo as m
+from Modulo import PI as kte, cuadrado as elevado
+
+r1 = m.cuadrado(kte); print(r1)
+r2 = elevado(6)     ; print(r2)
+```
+
+### Operadores Binarios y de Comparación
+
+![](../../files/images/BinaryOperators.png)
+
+```{python}
+a = [1, 2, 3]
+b = a
+c = list(a) # Crea una copia 
+
+print(a is b)
+print(a is not c)
+```
+
+```{python}
+a.append(4)
+a == c
+```
+
+------------------------------------------------------------------------
+
+## :information_source: *Tipos Estándar*
+
+| Tipo    | Descripción                                                                               |
+|-----------------------|-------------------------------------------------|
+| `None`  | El valor "nulo" de Python (*solo existe una instancia del objeto `None`*)                 |
+| `str`   | Tipo de cadena; contiene cadenas Unicode                                                  |
+| `bytes` | Datos binarios en bruto                                                                   |
+| `float` | Número de punto flotante de doble precisión (*nota que no hay un tipo `double` separado*) |
+| `bool`  | Un valor booleano `True` o `False`                                                        |
+| `int`   | Entero de precisión arbitraria                                                            |
+
+### Booleans
+
+```{python}
+print(int(False)); print(int(True))
+print(True + False)
+bool(2024.75) # Todo valor !=0 se convierte en True
+```
+
+### [Strings](https://docs.python.org/3/library/string.html)
+
+Abc.
+
+```{python}
+a = "Hola mundo \\>"
+b = """
+Esta cadena es más larga que
+abarca varias líneas
+"""
+c = r"D:\Documentos\Carpeta"
+
+print(c)
+b.count("\n")
+```
+
+```{python}
+# Los strings en Python son inmutables: no se puede modificar una cadena
+print(a[5])
+# a[5] = "M" # TypeError: 'str' object does not support item assignment
+a.replace("m", "M")
+```
+
+```{python}
+a       # Tras esta operación, la variable no se modifica
+```
+
+```{python}
+list(a) # Las cadenas son una secuencia de caracteres Unicode
+```
+
+#### **Formatted string**
+
+```{python}
+# 0:.3f El 1re valor será un flotantes con 3 decimales
+# 1:s   El 2do valor será un string
+# 2:d   El 3re valor será un entero
+template = "{0:.3f} {1:s} equivalen a US${2:d}"
+template.format(3.960, "pesos Colombianos", 1) # Intente modificar el tipo de alguno de estos
+```
+
+```{python}
+Tasa   = 3.960
+Moneda = "Colombianos"
+f"{Tasa:.4f} pesos {Moneda} equivalen a US${Tasa/Tasa}"
+```
+
+### Type casting
+
+Abc.
+
+```{python}
+
+```
+
+### None
+
+Abc.
+
+```{python}
+
+```
+
+### Dates and times
+
+Abc.
+
+```{python}
+from datetime import datetime, date, time
+dt = datetime(2024, 1, 31, 20, 30, 21)
+
+dt.day
+dt.date()
+dt.time()
+dt.strftime("%Y-%m-%d %H:%M")
+```
+
+```{python}
+dt_hour = dt.replace(minute = 0, second = 0)
+dt_hour
+```
+
+```{python}
+delta = datetime.now() - dt
+delta
+```
+
+------------------------------------------------------------------------
+
+## :triangular_flag_on_post: *Objetos Mutables e Inmutables*
+
+Abc.
+
+```{python}
+
+```
+
+------------------------------------------------------------------------
+
+## :loop: *Flujo de Control*
+
+### `if`, `elif`, and `else`
+
+```{python}
+w = 5; x = 4; y = 3; z = 2
+if x < 0:
+    print("x es negativo")
+elif x == 0:
+    print("x es cero")
+elif w > x > y > z:
+    print("Los valores están en orden")
+else:
+    print("Otro caso diferente")
+```
+
+### `for`
+
+```{python}
+numeros = [1, 2, None, 4, None, 5] # sum(numeros)
+total = 0
+for value in numeros:
+    if value is None:
+        continue
+    if value == 4:
+        break
+    total += value
+total
+```
+
+```{python}
+# 'break' sólo termina el for más interno, cualquier for externo continuará
+for i in range(4):
+    for j in range(4):
+        if j > i:
+            break
+        print((i, j))
+```
+
+### `while`
+
+### `pass`
+
+Es la sentencia `no-op` (o `no hacer nada`) de Python. Puede usarse en bloques en los que no se va a realizar ninguna acción. Sólo es necesaria porque Python utiliza espacios en blanco para delimitar los bloques.
+
+```{python}
+for value in numeros:
+    if value is None:
+        pass
+    else:
+        total += value
+total
+```
+
+### `range`
+
+```{python}
+range(10)
+range(1, 10)
+list(range(0, 20, 2))
+list(range(5, 0, -1))
+```
+
+https://jjallaire.github.io/pydata-quarto-dashboards/#/learning-more
+
+jupyter notebook
+
+import numpy as np import matplotlib.pyplot as plt import pandas as pd import seaborn as sns import statsmodels as sm pd.options.display.max_columns = 20 pd.options.display.max_rows = 20 pd.options.display.max_colwidth = 80 np.set_printoptions(precision=4, suppress=True)
