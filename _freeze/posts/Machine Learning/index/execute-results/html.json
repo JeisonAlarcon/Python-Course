@@ -1,0 +1,12 @@
+{
+  "hash": "37bb3f5348cef042f39f26a3ac2385f8",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: Machine Learning\ndate: '2024-08-01'\nimage: Featured_Image_ScikitLearn-TensorFlow.jpg\nfrom: markdown+emoji\ncategories:\n  - Scikit-Learn\n  - TensorFlow\n  - Keras\n  - PyTorch\n  - XGBoost\n  - theano\n---\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

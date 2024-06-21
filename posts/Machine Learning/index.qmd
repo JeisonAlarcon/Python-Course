@@ -1,0 +1,8 @@
+---
+title:   "Machine Learning"
+date:    "2024-08-15"
+image:   "Featured_Image_ScikitLearn-TensorFlow.jpg"
+jupyter: python3
+from:    markdown+emoji
+categories: [Scikit-Learn, TensorFlow, Keras, PyTorch, XGBoost, theano]
+---

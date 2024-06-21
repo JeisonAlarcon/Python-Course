@@ -1,0 +1,8 @@
+---
+title:   "Dashboarding"
+date:    "2024-07-15"
+image:   "Featured_Image_Streamlit-Dash.jpg"
+jupyter: python3
+from:    markdown+emoji
+categories: [Streamlit, Dash]
+---

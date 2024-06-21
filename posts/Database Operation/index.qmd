@@ -1,0 +1,8 @@
+---
+title:   "Database Operation"
+date:    "2024-08-01"
+image:   "Featured_Image_Dask-PySpark.jpg"
+jupyter: python3
+from:    markdown+emoji
+categories: [Dask, PySpark, Hadoop, Kafka, Koalas]
+---

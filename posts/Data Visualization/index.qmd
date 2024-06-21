@@ -1,0 +1,8 @@
+---
+title:   "Data Visualization"
+date:    "2024-07-01"
+image:   "Featured_Image_Plotly-Seaborn.jpg"
+jupyter: python3
+from:    markdown+emoji
+categories: [Plotly, Seaborn, Folium, Matplotlib, Bokeh, Altair]
+---

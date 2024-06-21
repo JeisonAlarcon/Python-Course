@@ -1,0 +1,8 @@
+---
+title:   "Statistical Analysis P2"
+date:    "2024-06-30"
+image:   "Featured_Image_SciPy.jpg"
+jupyter: python3
+from:    markdown+emoji
+categories: [SciPy, Statsmodels, PyStan, PyMC3, Lifelines, Pingouin]
+---

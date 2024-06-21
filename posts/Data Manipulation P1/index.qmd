@@ -1,0 +1,8 @@
+---
+title:   "Data Manipulation P1"
+date:    "2024-06-15"
+image:   "Featured_Image_Numpy.jpg"
+jupyter: python3
+from:    markdown+emoji
+categories: [Numpy, Pandas, Polars, Modin, Vaex, Datatable, CuPy]
+---

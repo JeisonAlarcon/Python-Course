@@ -1,5 +1,6 @@
 project:
   type: website
+  execute-dir: project
 
   preview:
     port: 5555
@@ -19,7 +20,9 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light: flatly
+      dark:  darkly
     css: styles.css
     toc: false
     code-link: true
@@ -28,5 +31,10 @@ format:
     reference-location: margin
     footnotes-hover: true
     highlight-style: monokai
+
+execute:
+  freeze: auto
+  cache:  false
+  error:  true
 
 editor: visual

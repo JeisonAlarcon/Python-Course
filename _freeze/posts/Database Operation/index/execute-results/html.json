@@ -1,0 +1,12 @@
+{
+  "hash": "64b07cdc376ac889de780b3b52359c4d",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: Database Operation\ndate: '2024-08-31'\nimage: Featured_Image_Dask-PySpark.jpg\nfrom: markdown+emoji\ncategories:\n  - Dask\n  - PySpark\n  - Hadoop\n  - Kafka\n  - Koalas\n---\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

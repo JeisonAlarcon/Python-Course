@@ -1,0 +1,12 @@
+{
+  "hash": "163cb420e0a0554c2ed51d67017bb554",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: Statistical Analysis P1\ndate: '2024-07-15'\nimage: Featured_Image_Statsmodels.jpg\nfrom: markdown+emoji\ncategories:\n  - SciPy\n  - Statsmodels\n  - PyStan\n  - PyMC3\n  - Lifelines\n  - Pingouin\n---\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

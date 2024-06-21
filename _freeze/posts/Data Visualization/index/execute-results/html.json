@@ -1,0 +1,12 @@
+{
+  "hash": "c6d33f8128dbf4e5fc56d14f41eee88d",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: Data Visualization\ndate: '2024-07-01'\nimage: Featured_Image_Plotly-Seaborn.jpg\nfrom: markdown+emoji\ncategories:\n  - Plotly\n  - Seaborn\n  - Folium\n  - Matplotlib\n  - Bokeh\n  - Altair\n---\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

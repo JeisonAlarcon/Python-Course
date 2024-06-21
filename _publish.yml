@@ -1,0 +1,4 @@
+- source: index.qmd
+  netlify:
+    - id: a83d1d05-02bb-4452-8c16-6a56fd25c23c
+      url: 'https://python-course-dnpe.netlify.app/'

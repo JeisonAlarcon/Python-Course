@@ -1,4 +1,4 @@
-# ---
+---
 title:   "Getting Started"
 date:    "2024-06-01"
 image:   "Featured Image.jpg"
@@ -144,7 +144,6 @@ a = "cinco"; print(type(a))
 ```
 
 ```{python}
-#| eval: false
 "5" + 5
 ```
 
@@ -225,7 +224,7 @@ r2 = elevado(6)     ; print(r2)
 ```{python}
 a = [1, 2, 3]
 b = a
-c = list(a) # Crea una copia 
+c = list(a) # Crea una copia
 
 print(a is b)
 print(a is not c)
@@ -236,12 +235,22 @@ a.append(4)
 a == c
 ```
 
+```{python}
+# Intercambiar los nombres de las variables:
+a, b = 1, 2
+# tmp = a
+# a = b
+# b = tmp
+b, a = a, b
+print(f'a = {a}, b = {b}')
+```
+
 ------------------------------------------------------------------------
 
 ## :information_source: *Tipos Estándar*
 
 | Tipo    | Descripción                                                                               |
-|-----------------------|-------------------------------------------------|
+|-------------|-----------------------------------------------------------|
 | `None`  | El valor "nulo" de Python (*solo existe una instancia del objeto `None`*)                 |
 | `str`   | Tipo de cadena; contiene cadenas Unicode                                                  |
 | `bytes` | Datos binarios en bruto                                                                   |
@@ -254,7 +263,8 @@ a == c
 ```{python}
 print(int(False)); print(int(True))
 print(True + False)
-bool(2024.75) # Todo valor !=0 se convierte en True
+print(bool(2024.75)) # Todo valor !=0 se convierte en True
+print(bool("."))     # Todo valor !="" se convierte en True
 ```
 
 ### [Strings](https://docs.python.org/3/library/string.html)
@@ -269,26 +279,46 @@ abarca varias líneas
 """
 c = r"D:\Documentos\Carpeta"
 
-print(c)
+print(a); print(b); print(c)
 b.count("\n")
 ```
 
 ```{python}
 # Los strings en Python son inmutables: no se puede modificar una cadena
 print(a[5])
-# a[5] = "M" # TypeError: 'str' object does not support item assignment
-a.replace("m", "M")
+a[5] = "M"
 ```
 
 ```{python}
+a.replace("m", "M")
+```
+```{python}
 a       # Tras esta operación, la variable no se modifica
 ```
-
 ```{python}
 list(a) # Las cadenas son una secuencia de caracteres Unicode
 ```
 
 #### **Formatted string**
+
+Existen varios métodos para formatear cadenas de texto, entre los cuales encontramos:
+
+1. ***Operador de Formato `%`***
+
+```{python}
+Nombre = "Pepito"
+Edad = 33 
+Pi   = 3.141592
+print("Hola, mi nombre es %s y tengo %d años. Y sé que pi vale: %.2f." % (Nombre, Edad, Pi))
+```
+
+2. ***Método `.format()`***
+
+```{python}
+print("Hola, mi nombre es {} y tengo {} años. Y sé que pi vale: {:.2f}.".format(Nombre, Edad, Pi))
+print("Nombre: {name}, Edad: {age}".format(name = "Luis", age = 33))
+print("El {0} se encuentra en el {1} y el {1} se encuentra en el {0}.".format("sol", "cielo"))
+```
 
 ```{python}
 # 0:.3f El 1re valor será un flotantes con 3 decimales
@@ -298,11 +328,48 @@ template = "{0:.3f} {1:s} equivalen a US${2:d}"
 template.format(3.960, "pesos Colombianos", 1) # Intente modificar el tipo de alguno de estos
 ```
 
+3. ***f-strings***
+
 ```{python}
 Tasa   = 3.960
 Moneda = "Colombianos"
 f"{Tasa:.4f} pesos {Moneda} equivalen a US${Tasa/Tasa}"
 ```
+
+```{python}
+# Cálculos Dentro:
+a = 5; b = 10
+print(f"La suma de {a} y {b} es {a + b}. Además a*b = {a*b}")
+# Alinear Texto:
+print(f"{'izquierda':<10} {'centrado':^10} {'derecha':>10}")
+# Mostrar Números en Diferentes Bases:
+Numero = 255
+print(f"Decimal: {Numero}, Binario: {Numero:b}, Hexadecimal: {Numero:x}, Octal: {Numero:o}")
+# Incluir Expresiones y Métodos:
+Txt = "Amo Python"
+print(f"El texto en mayúsculas es {Txt.upper()}.")
+# Combinación con Diccionarios:
+Pais = {"nombre": "Colombia", "NoPoblacion": 50}
+print(f"País: {Pais['nombre']}, Habitantes: {Pais['NoPoblacion']}")
+# Incluir Llaves Literales:
+print(f"Este es un valor literal en llaves: {{Numero}}, y este es el valor de la variable: {Numero}.")
+```
+
+4. ***Método `string.Template`***
+
+```{python}
+from string import Template
+template = Template("Hola, mi nombre es $name y tengo $age años.")
+mensaje  = template.substitute(name = "Pepito", age = 33)
+print(mensaje)
+```
+
+| Método               | Sintaxis                       | Ventajas                                           | Desventajas                                   |
+|----------------------|--------------------------------|----------------------------------------------------|-----------------------------------------------|
+| Operador `%`         | `Hola, %s` % "mundo"           | Simple y familiar para quienes conocen C           | Menos flexible y más propenso a errores       |
+| Método `.format()`   | `Hola, {}`.format("mundo")     | Muy flexible, soporta nombres y posiciones         | Sintaxis más verbosa                          |
+| f-strings            | `f"Hola, {variable}"`          | Muy legible, permite expresiones dentro de `{}`    | Disponible solo en Python 3.6+                |
+| `string.Template`    | `Template("Hola, $nombre")`    | Simple y seguro, fácil de leer                     | Menos potente para formateo complejo          |
 
 ### Type casting
 
@@ -348,11 +415,103 @@ delta
 
 ## :triangular_flag_on_post: *Objetos Mutables e Inmutables*
 
-Abc.
+### Tuplas
+
+::: callout-note
+Una tupla es una secuencia de objetos de longitud fija e **inmutable** (*una vez asignada no puede modificarse*). La forma más sencilla de crear una tupla es con una secuencia de valores separados por comas entre paréntesis
+:::
 
 ```{python}
+#| eval: false
+#| echo: false
+tup1 = (1, 2, 3)
+tup2 = 4, 5, 6   # Los paréntesis pueden omitirse
+print(tup1); print(tup2)
 
+# Se puede convertir cualquier secuencia o iterador
+print( tuple([7, 8, 9]) )
+print( tuple("Texto") )
+
+tupCompleja = (2, 4, 8), (3, 5)
+print(tupCompleja)
+tupCompleja[0]
+
+tupMixta = tuple(['txt', [1, 2], True])
+tupMixta[1].append(3) # Si un objeto dentro de una tupla es mutable, se puede modificar
+print(tupMixta)
+tupMixta[2] = False
 ```
+
+```{python}
+#| eval: false
+#| echo: false
+print( tup1*2 + (20, 24) + ('year',) )
+
+# Desempaquetado (unpacking)
+uno, dos, tres = tup1
+print(uno)
+(a, b, c), (d, e) = tupCompleja
+print(a)
+
+seq = [(1, 2, 3), (4, 5, 6), (7, 8, 9)]
+for a, b, c in seq:
+    print(f'a={a}, b={b}, c={c}')
+
+first, second, *rest = (1, 2, 3, 4, 5)
+print(first); print(second); print(rest)
+
+# El guión bajo (_) para descartar las variables no deseadas
+first, second, *_ = (1, 2, 3, 4, 5)
+# Métodos
+(1, 0, 1, 1, 0).count(0)
+```
+
+### Listas
+
+::: callout-note
+Las listas son de longitud variable y su contenido puede modificarse (son **mutables**).
+:::
+
+```{python}
+#| eval: false
+#| echo: false
+listA = [0, "1", None]
+print(listA)
+list(tup1)
+```
+
+```{python}
+#| eval: false
+#| echo: false
+# Añadir y eliminar elementos
+listA.append("cuartoElemento")
+listA.insert(1, "2")
+listA.pop(2)
+print(listA)
+```
+
+::: callout-caution
+La inserción (`insert`) es más costosa computacionalmente que la adición (`append`), ya que las referencias a los elementos subsiguientes deben desplazarse internamente para dejar espacio al nuevo elemento.
+:::
+
+```{python}
+#| eval: false
+#| echo: false
+listA.append("2"); print(listA)
+listA.remove("2"); print(listA)
+```
+
+### Diccionarios
+
+::: callout-note
+Un diccionario (*conocido en otros lengujaes como `maps` o `associative arrays`*) almacena una colección de pares `clave-valor`, donde `clave` y `valor` son objetos Python. Cada clave está asociada a un valor, de modo que un valor puede ser convenientemente recuperado, insertado, modificado o eliminado dada una clave en particular.
+:::
+
+### Conjuntos
+
+::: callout-warning
+This is an example of an tip callout
+:::
 
 ------------------------------------------------------------------------
 
@@ -361,6 +520,8 @@ Abc.
 ### `if`, `elif`, and `else`
 
 ```{python}
+#| eval: false
+#| echo: false
 w = 5; x = 4; y = 3; z = 2
 if x < 0:
     print("x es negativo")
@@ -375,6 +536,8 @@ else:
 ### `for`
 
 ```{python}
+#| eval: false
+#| echo: false
 numeros = [1, 2, None, 4, None, 5] # sum(numeros)
 total = 0
 for value in numeros:
@@ -387,6 +550,8 @@ total
 ```
 
 ```{python}
+#| eval: false
+#| echo: false
 # 'break' sólo termina el for más interno, cualquier for externo continuará
 for i in range(4):
     for j in range(4):
@@ -402,6 +567,8 @@ for i in range(4):
 Es la sentencia `no-op` (o `no hacer nada`) de Python. Puede usarse en bloques en los que no se va a realizar ninguna acción. Sólo es necesaria porque Python utiliza espacios en blanco para delimitar los bloques.
 
 ```{python}
+#| eval: false
+#| echo: false
 for value in numeros:
     if value is None:
         pass
@@ -413,14 +580,14 @@ total
 ### `range`
 
 ```{python}
+#| eval: false
+#| echo: false
 range(10)
 range(1, 10)
 list(range(0, 20, 2))
 list(range(5, 0, -1))
 ```
 
-https://jjallaire.github.io/pydata-quarto-dashboards/#/learning-more
+<!-- https://jjallaire.github.io/pydata-quarto-dashboards/#/learning-more -->
 
-jupyter notebook
-
-import numpy as np import matplotlib.pyplot as plt import pandas as pd import seaborn as sns import statsmodels as sm pd.options.display.max_columns = 20 pd.options.display.max_rows = 20 pd.options.display.max_colwidth = 80 np.set_printoptions(precision=4, suppress=True)
+<!-- import numpy as np import matplotlib.pyplot as plt import pandas as pd import seaborn as sns import statsmodels as sm pd.options.display.max_columns = 20 pd.options.display.max_rows = 20 pd.options.display.max_colwidth = 80 np.set_printoptions(precision=4, suppress=True) -->

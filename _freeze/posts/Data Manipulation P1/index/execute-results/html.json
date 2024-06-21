@@ -1,0 +1,12 @@
+{
+  "hash": "b1d908258df4618f7aa9b59344f18a42",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: Data Manipulation P1\ndate: '2024-06-15'\nimage: Featured_Image_Numpy.jpg\nfrom: markdown+emoji\ncategories:\n  - Numpy\n  - Pandas\n  - Polars\n  - Modin\n  - Vaex\n  - Datatable\n  - CuPy\n---\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
