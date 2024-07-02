@@ -250,7 +250,7 @@ print(f'a = {a}, b = {b}')
 ## :information_source: *Tipos Estándar*
 
 | Tipo    | Descripción                                                                               |
-|-------------|-----------------------------------------------------------|
+|----------------|--------------------------------------------------------|
 | `None`  | El valor "nulo" de Python (*solo existe una instancia del objeto `None`*)                 |
 | `str`   | Tipo de cadena; contiene cadenas Unicode                                                  |
 | `bytes` | Datos binarios en bruto                                                                   |
@@ -263,6 +263,7 @@ print(f'a = {a}, b = {b}')
 ```{python}
 print(int(False)); print(int(True))
 print(True + False)
+print(not not not not True)
 print(bool(2024.75)) # Todo valor !=0 se convierte en True
 print(bool("."))     # Todo valor !="" se convierte en True
 ```
@@ -292,9 +293,11 @@ a[5] = "M"
 ```{python}
 a.replace("m", "M")
 ```
+
 ```{python}
 a       # Tras esta operación, la variable no se modifica
 ```
+
 ```{python}
 list(a) # Las cadenas son una secuencia de caracteres Unicode
 ```
@@ -303,7 +306,7 @@ list(a) # Las cadenas son una secuencia de caracteres Unicode
 
 Existen varios métodos para formatear cadenas de texto, entre los cuales encontramos:
 
-1. ***Operador de Formato `%`***
+1.  ***Operador de Formato `%`***
 
 ```{python}
 Nombre = "Pepito"
@@ -312,7 +315,7 @@ Pi   = 3.141592
 print("Hola, mi nombre es %s y tengo %d años. Y sé que pi vale: %.2f." % (Nombre, Edad, Pi))
 ```
 
-2. ***Método `.format()`***
+2.  ***Método `.format()`***
 
 ```{python}
 print("Hola, mi nombre es {} y tengo {} años. Y sé que pi vale: {:.2f}.".format(Nombre, Edad, Pi))
@@ -328,7 +331,7 @@ template = "{0:.3f} {1:s} equivalen a US${2:d}"
 template.format(3.960, "pesos Colombianos", 1) # Intente modificar el tipo de alguno de estos
 ```
 
-3. ***f-strings***
+3.  ***f-strings***
 
 ```{python}
 Tasa   = 3.960
@@ -355,7 +358,7 @@ print(f"País: {Pais['nombre']}, Habitantes: {Pais['NoPoblacion']}")
 print(f"Este es un valor literal en llaves: {{Numero}}, y este es el valor de la variable: {Numero}.")
 ```
 
-4. ***Método `string.Template`***
+4.  ***Método `string.Template`***
 
 ```{python}
 from string import Template
@@ -364,12 +367,12 @@ mensaje  = template.substitute(name = "Pepito", age = 33)
 print(mensaje)
 ```
 
-| Método               | Sintaxis                       | Ventajas                                           | Desventajas                                   |
-|----------------------|--------------------------------|----------------------------------------------------|-----------------------------------------------|
-| Operador `%`         | `Hola, %s` % "mundo"           | Simple y familiar para quienes conocen C           | Menos flexible y más propenso a errores       |
-| Método `.format()`   | `Hola, {}`.format("mundo")     | Muy flexible, soporta nombres y posiciones         | Sintaxis más verbosa                          |
-| f-strings            | `f"Hola, {variable}"`          | Muy legible, permite expresiones dentro de `{}`    | Disponible solo en Python 3.6+                |
-| `string.Template`    | `Template("Hola, $nombre")`    | Simple y seguro, fácil de leer                     | Menos potente para formateo complejo          |
+| Método             | Sintaxis                    | Ventajas                                        | Desventajas                             |
+|-----------------|-----------------|---------------------|-----------------|
+| Operador `%`       | `Hola, %s` % "mundo"        | Simple y familiar para quienes conocen C        | Menos flexible y más propenso a errores |
+| Método `.format()` | `Hola, {}`.format("mundo")  | Muy flexible, soporta nombres y posiciones      | Sintaxis más verbosa                    |
+| f-strings          | `f"Hola, {variable}"`       | Muy legible, permite expresiones dentro de `{}` | Disponible solo en Python 3.6+          |
+| `string.Template`  | `Template("Hola, $nombre")` | Simple y seguro, fácil de leer                  | Menos potente para formateo complejo    |
 
 ### Type casting
 
@@ -418,24 +421,26 @@ delta
 ### Tuplas
 
 ::: callout-note
-Una tupla es una secuencia de objetos de longitud fija e **inmutable** (*una vez asignada no puede modificarse*). La forma más sencilla de crear una tupla es con una secuencia de valores separados por comas entre paréntesis
+Una tupla es una secuencia **ordenada** de objetos de longitud fija e **inmutable** (*una vez asignada no puede modificarse*). La forma más sencilla de crear una tupla es con una secuencia de valores separados por comas entre paréntesis.
 :::
 
 ```{python}
-#| eval: false
-#| echo: false
-tup1 = (1, 2, 3)
-tup2 = 4, 5, 6   # Los paréntesis pueden omitirse
+tup1 = (1, 2, 2)      # Pueden contener elementos repetidos
+tup2 = 4, 5, 6        # Los paréntesis pueden omitirse
 print(tup1); print(tup2)
-
+```
+```{python}
 # Se puede convertir cualquier secuencia o iterador
 print( tuple([7, 8, 9]) )
 print( tuple("Texto") )
+```
 
+```{python}
 tupCompleja = (2, 4, 8), (3, 5)
 print(tupCompleja)
 tupCompleja[0]
-
+```
+```{python}
 tupMixta = tuple(['txt', [1, 2], True])
 tupMixta[1].append(3) # Si un objeto dentro de una tupla es mutable, se puede modificar
 print(tupMixta)
@@ -443,51 +448,60 @@ tupMixta[2] = False
 ```
 
 ```{python}
-#| eval: false
-#| echo: false
 print( tup1*2 + (20, 24) + ('year',) )
+```
 
+```{python}
 # Desempaquetado (unpacking)
 uno, dos, tres = tup1
 print(uno)
 (a, b, c), (d, e) = tupCompleja
 print(a)
-
+```
+```{python}
 seq = [(1, 2, 3), (4, 5, 6), (7, 8, 9)]
 for a, b, c in seq:
-    print(f'a={a}, b={b}, c={c}')
+    print(f'a = {a}, b = {b}, c = {c}')
+```
 
+```{python}
 first, second, *rest = (1, 2, 3, 4, 5)
-print(first); print(second); print(rest)
-
+print(f"{first} || {second} || {rest}")
 # El guión bajo (_) para descartar las variables no deseadas
 first, second, *_ = (1, 2, 3, 4, 5)
+```
+
+```{python}
+# Si desea definir una tupla con un solo elemento  debe incluir una coma al final:
+my_t = (3,)
+print(my_t)
 # Métodos
 (1, 0, 1, 1, 0).count(0)
 ```
 
 ### Listas
 
+Una lista es una colección de elementos en un orden determinado. Puedes poner lo que quieras en una lista, y los elementos que la componen no tienen por qué estar relacionados de ninguna manera en particular. En Python, los corchetes `[ ]` indican una lista, y los elementos individuales de la lista están separados por comas.
+
+-   Las posiciones de índice empiezan en 0, no en 1.
+
 ::: callout-note
 Las listas son de longitud variable y su contenido puede modificarse (son **mutables**).
 :::
 
 ```{python}
-#| eval: false
-#| echo: false
-listA = [0, "1", None]
-print(listA)
+motorcycles = [0, "honda", "yamaha", "suzuki", None]
+print(motorcycles)
 list(tup1)
 ```
 
 ```{python}
-#| eval: false
-#| echo: false
 # Añadir y eliminar elementos
-listA.append("cuartoElemento")
-listA.insert(1, "2")
-listA.pop(2)
-print(listA)
+motorcycles.append("ducati")
+motorcycles.insert(1, "1")
+del motorcycles[-2]         # Removing an Item Using the del Statement
+motorcycles.pop(0)          # Popping Items from Any Position
+print(motorcycles)
 ```
 
 ::: callout-caution
@@ -495,17 +509,66 @@ La inserción (`insert`) es más costosa computacionalmente que la adición (`ap
 :::
 
 ```{python}
-#| eval: false
-#| echo: false
-listA.append("2"); print(listA)
-listA.remove("2"); print(listA)
+motorcycles.append("2"); print(motorcycles)
+motorcycles.remove("2"); print(motorcycles) # Removing an Item by Value
+```
+
+```{python}
+# Sorting a List
+motorcycles.sort(); print(motorcycles)
+motorcycles.sort(reverse = True); print(motorcycles)
+print(sorted(motorcycles)); print(motorcycles)
+```
+
+```{python}
+print(motorcycles.reverse())
+len(motorcycles)
+```
+
+```{python}
+# Python returns another index error
+listA = []
+print(listA[-1])
+```
+
+```{python}
+squares = []
+for value in range(1, 11):
+    squares.append(value ** 2)
+print(squares)
+# List Comprehensions
+squares = [value**2 for value in range(1, 11)]
+print(squares)
+```
+
+```{python}
+# Slicing a List
+print(motorcycles[0:3])
+print(motorcycles[2:])
+print(motorcycles[-2:])
+```
+
+```{python}
+# Copying a List
+onces = ["pizza", "arepa", "empanada"]
+tusOnces = onces[:]
+onces.append("buñuelo")
+tusOnces.append("pan")
+print(onces); print(tusOnces)
 ```
 
 ### Diccionarios
 
 ::: callout-note
-Un diccionario (*conocido en otros lengujaes como `maps` o `associative arrays`*) almacena una colección de pares `clave-valor`, donde `clave` y `valor` son objetos Python. Cada clave está asociada a un valor, de modo que un valor puede ser convenientemente recuperado, insertado, modificado o eliminado dada una clave en particular.
+Un diccionario (*conocido en otros lengujaes como `maps` o `associative arrays`*) almacena una colección de pares `clave-valor`, donde `clave` y `valor` son objetos Python. Cada clave está asociada a un valor, de modo que un valor puede ser convenientemente recuperado, insertado, modificado o eliminado dada una clave en particular. Tenga presente que las claves únicas (*no permiten duplicados en las claves*).
 :::
+
+```{python}
+fisico = {'color': 'blanco', 'altura': 1.79}
+fisico["ojos"] = "azules"
+fisico["peso"] = 87
+print(fisico)
+```
 
 ### Conjuntos
 
@@ -520,8 +583,6 @@ This is an example of an tip callout
 ### `if`, `elif`, and `else`
 
 ```{python}
-#| eval: false
-#| echo: false
 w = 5; x = 4; y = 3; z = 2
 if x < 0:
     print("x es negativo")
@@ -536,22 +597,18 @@ else:
 ### `for`
 
 ```{python}
-#| eval: false
-#| echo: false
 numeros = [1, 2, None, 4, None, 5] # sum(numeros)
 total = 0
 for value in numeros:
     if value is None:
         continue
     if value == 4:
-        break
+        break       # La sentencia 'break' se usa para salir del bucle
     total += value
 total
 ```
 
 ```{python}
-#| eval: false
-#| echo: false
 # 'break' sólo termina el for más interno, cualquier for externo continuará
 for i in range(4):
     for j in range(4):
@@ -561,6 +618,16 @@ for i in range(4):
 ```
 
 ### `while`
+
+Esta estructura permite ejecutar repetidamente un bloque de código mientras una condición especificada se evalúa como **verdadera**. Este ciclo es útil cuando no se sabe de antemano cuántas veces se necesitará repetir el bloque de código, a diferencia del ciclo `for`, que itera sobre una secuencia de elementos de longitud conocida.
+
+```{python}
+#| eval: false
+while True:
+    entrada = input("Escribe 'salir' para terminar: ")
+    if entrada.lower() == "salir":
+        break
+```
 
 ### `pass`
 
@@ -577,17 +644,106 @@ for value in numeros:
 total
 ```
 
-### `range`
+Cuando la ejecución del programa alcanza una sentencia `continue`, la ejecución del programa salta inmediatamente al inicio del bucle y reevalúa la condición del bucle.
 
 ```{python}
 #| eval: false
-#| echo: false
-range(10)
-range(1, 10)
-list(range(0, 20, 2))
-list(range(5, 0, -1))
+while True:
+    print('¿Quién eres tú?')
+    name = input()
+    if name != 'Juan':
+        continue
+    print('Hola Juan, cuál es tu contraseña (es un equipo)')
+    password = input()
+    if password == 'nacional':
+        break
+print('Acceso Concedido.')
+```
+
+> + **Pass** (`for`, `if`): No realiza ninguna acción y se utiliza como marcador de lugar (placeholder para futura implementación).
+  + **Continue** (`for`, `while`): Salta a la siguiente iteración del bucle, omitiendo el resto del código en la iteración actual.
+  + **Break** (`if`): Termina el bucle inmediatamente, saliendo de la estructura de control de flujo.
+
+### `range`
+
+```{python}
+print(f"{   range(10)   }")
+print(f"{   range(1, 10)   }")
+print(f"{   list(range(0, 20, 2))   }")
+print(f"{   list(range(5, -1, -1))   }")
 ```
 
 <!-- https://jjallaire.github.io/pydata-quarto-dashboards/#/learning-more -->
 
 <!-- import numpy as np import matplotlib.pyplot as plt import pandas as pd import seaborn as sns import statsmodels as sm pd.options.display.max_columns = 20 pd.options.display.max_rows = 20 pd.options.display.max_colwidth = 80 np.set_printoptions(precision=4, suppress=True) -->
+
+------------------------------------------------------------------------
+
+<!-- ## :loop: *Funciones* -->
+
+<!-- ```{python} -->
+<!-- # Py añade return None al final de cualquier definición de función sin sentencia return: -->
+<!-- def Saludo(nombre): -->
+<!--   print("Hola " + nombre) -->
+
+<!-- spam = Saludo("Carlos") -->
+<!-- None == spam -->
+<!-- ``` -->
+
+<!-- En un programa de Python, hay exactamente un único ámbito global. Este ámbito global es el contexto en el que las variables globales se definen y existen a lo largo de la ejecución del programa. -->
+
+<!-- -   En cuanto a los ámbitos locales, el número de estos puede variar. Cada vez que se define y se llama a una función, se crea un nuevo ámbito local. Por lo tanto, el número de ámbitos locales depende del número de funciones (incluidas las funciones anidadas) y métodos que se llaman durante la ejecución del programa. -->
+
+<!-- ```{python} -->
+<!-- # Las variables locales no pueden utilizarse en el ámbito global: -->
+<!-- def getPI(): -->
+<!--   PI = 3.1415 -->
+<!-- getPI() -->
+<!-- print(PI) -->
+<!-- ``` -->
+
+<!-- ```{python} -->
+<!-- # Los ámbitos locales no pueden utilizar variables de otros ámbitos locales: -->
+<!-- def a(): -->
+<!--   phone = 444 -->
+<!--   b() -->
+<!--   print(phone) -->
+<!-- def b(): -->
+<!--   phone = 555 -->
+<!-- a() -->
+<!-- ``` -->
+
+<!-- ```{python} -->
+<!-- # Las variables globales pueden leerse desde un ámbito local: -->
+<!-- def a(): -->
+<!--   print(cte) -->
+<!-- cte = 1234 -->
+<!-- a() -->
+<!-- print(cte) -->
+<!-- ``` -->
+
+<!-- ```{python} -->
+<!-- # Si necesitas modificar una variable global desde dentro de una función: -->
+<!-- def a(): -->
+<!--     global cte -->
+<!--     cte = 'Ahoar soy una Variable Global' -->
+
+<!-- cte = 'Global' -->
+<!-- a() -->
+<!-- print(cte) -->
+<!-- ``` -->
+
+<!-- ```{python} -->
+<!-- # Evitar que un programa se bloquee cuando recibe un error: -->
+<!-- def a(b): -->
+<!--     try: -->
+<!--         return 1/b -->
+<!--     except ZeroDivisionError: -->
+<!--         print('Error: b debe ser diferente de 0.') -->
+<!-- print(a(2)) -->
+<!-- print(a(0)) -->
+<!-- ``` -->
+
+Python Enhancement Proposal (PEP): https://peps.python.org/pep-0008/
+
+https://docs.python.org/es/3/library/trace.html python -m trace --count -C . somefile.py Esto ejecutará somefile.py y generará listados anotados de todos los módulos de Python importados durante la ejecución en el directorio actual1.
