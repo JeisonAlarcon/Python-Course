@@ -250,7 +250,7 @@ print(f'a = {a}, b = {b}')
 ## :information_source: *Tipos Estándar*
 
 | Tipo    | Descripción                                                                               |
-|----------------|--------------------------------------------------------|
+|-------------|-----------------------------------------------------------|
 | `None`  | El valor "nulo" de Python (*solo existe una instancia del objeto `None`*)                 |
 | `str`   | Tipo de cadena; contiene cadenas Unicode                                                  |
 | `bytes` | Datos binarios en bruto                                                                   |
@@ -368,7 +368,7 @@ print(mensaje)
 ```
 
 | Método             | Sintaxis                    | Ventajas                                        | Desventajas                             |
-|-----------------|-----------------|---------------------|-----------------|
+|----------------|----------------|-----------------------|-------------------|
 | Operador `%`       | `Hola, %s` % "mundo"        | Simple y familiar para quienes conocen C        | Menos flexible y más propenso a errores |
 | Método `.format()` | `Hola, {}`.format("mundo")  | Muy flexible, soporta nombres y posiciones      | Sintaxis más verbosa                    |
 | f-strings          | `f"Hola, {variable}"`       | Muy legible, permite expresiones dentro de `{}` | Disponible solo en Python 3.6+          |
@@ -429,6 +429,7 @@ tup1 = (1, 2, 2)      # Pueden contener elementos repetidos
 tup2 = 4, 5, 6        # Los paréntesis pueden omitirse
 print(tup1); print(tup2)
 ```
+
 ```{python}
 # Se puede convertir cualquier secuencia o iterador
 print( tuple([7, 8, 9]) )
@@ -440,6 +441,7 @@ tupCompleja = (2, 4, 8), (3, 5)
 print(tupCompleja)
 tupCompleja[0]
 ```
+
 ```{python}
 tupMixta = tuple(['txt', [1, 2], True])
 tupMixta[1].append(3) # Si un objeto dentro de una tupla es mutable, se puede modificar
@@ -458,6 +460,7 @@ print(uno)
 (a, b, c), (d, e) = tupCompleja
 print(a)
 ```
+
 ```{python}
 seq = [(1, 2, 3), (4, 5, 6), (7, 8, 9)]
 for a, b, c in seq:
@@ -557,6 +560,20 @@ tusOnces.append("pan")
 print(onces); print(tusOnces)
 ```
 
+```{python}
+# Mutable
+mi_lista = [1, 2, 3]
+print(id(mi_lista))  # Ejemplo de ID: 139974841304960
+mi_lista.append(4)
+print(id(mi_lista))  # Mismo ID: 139974841304960
+
+# Inmutable
+mi_tupla = (1, 2, 3)
+print(id(mi_tupla))  # Ejemplo de ID: 139974841306352
+mi_tupla = (1, 2, 3, 4)
+print(id(mi_tupla))  # Nuevo ID: 139974841306400
+```
+
 ### Diccionarios
 
 ::: callout-note
@@ -568,6 +585,16 @@ fisico = {'color': 'blanco', 'altura': 1.79}
 fisico["ojos"] = "azules"
 fisico["peso"] = 87
 print(fisico)
+```
+
+```{python}
+# Diccionario con tuplas como claves
+puntos = {
+    (0, 0): "Origen",
+    (1, 2): "Punto A",
+    (3, 4): "Punto B"
+}
+print(puntos[(1, 2)])
 ```
 
 ### Conjuntos
@@ -660,9 +687,9 @@ while True:
 print('Acceso Concedido.')
 ```
 
-> + **Pass** (`for`, `if`): No realiza ninguna acción y se utiliza como marcador de lugar (placeholder para futura implementación).
-  + **Continue** (`for`, `while`): Salta a la siguiente iteración del bucle, omitiendo el resto del código en la iteración actual.
-  + **Break** (`if`): Termina el bucle inmediatamente, saliendo de la estructura de control de flujo.
+> -   **Pass** (`for`, `if`): No realiza ninguna acción y se utiliza como marcador de lugar (placeholder para futura implementación).
+> -   **Continue** (`for`, `while`): Salta a la siguiente iteración del bucle, omitiendo el resto del código en la iteración actual.
+> -   **Break** (`if`): Termina el bucle inmediatamente, saliendo de la estructura de control de flujo.
 
 ### `range`
 
@@ -679,70 +706,370 @@ print(f"{   list(range(5, -1, -1))   }")
 
 ------------------------------------------------------------------------
 
-<!-- ## :loop: *Funciones* -->
+## :loop: *Funciones*
 
-<!-- ```{python} -->
-<!-- # Py añade return None al final de cualquier definición de función sin sentencia return: -->
-<!-- def Saludo(nombre): -->
-<!--   print("Hola " + nombre) -->
+Las funciones en Python son bloques de código reutilizables que permiten estructurar y organizar mejor los programas. Se definen usando la palabra clave `def` y pueden aceptar argumentos y devolver valores.
 
-<!-- spam = Saludo("Carlos") -->
-<!-- None == spam -->
-<!-- ``` -->
+```{python}
+# Py añade return None al final de cualquier definición de función sin sentencia return:
+def Saludo(nombre):
+  print("Hola " + nombre)
 
-<!-- En un programa de Python, hay exactamente un único ámbito global. Este ámbito global es el contexto en el que las variables globales se definen y existen a lo largo de la ejecución del programa. -->
+spam = Saludo("Carlos")
+None == spam
+```
 
-<!-- -   En cuanto a los ámbitos locales, el número de estos puede variar. Cada vez que se define y se llama a una función, se crea un nuevo ámbito local. Por lo tanto, el número de ámbitos locales depende del número de funciones (incluidas las funciones anidadas) y métodos que se llaman durante la ejecución del programa. -->
+En un programa de Python, hay exactamente un único ámbito global. Este ámbito global es el contexto en el que las variables globales se definen y existen a lo largo de la ejecución del programa.
 
-<!-- ```{python} -->
-<!-- # Las variables locales no pueden utilizarse en el ámbito global: -->
-<!-- def getPI(): -->
-<!--   PI = 3.1415 -->
-<!-- getPI() -->
-<!-- print(PI) -->
-<!-- ``` -->
+-   En cuanto a los ámbitos locales, el número de estos puede variar. Cada vez que se define y se llama a una función, se crea un nuevo ámbito local. Por lo tanto, el número de ámbitos locales depende del número de funciones (*incluidas las funciones anidadas*) y métodos que se llaman durante la ejecución del programa.
 
-<!-- ```{python} -->
-<!-- # Los ámbitos locales no pueden utilizar variables de otros ámbitos locales: -->
-<!-- def a(): -->
-<!--   phone = 444 -->
-<!--   b() -->
-<!--   print(phone) -->
-<!-- def b(): -->
-<!--   phone = 555 -->
-<!-- a() -->
-<!-- ``` -->
+```{python}
+# Las variables locales no pueden utilizarse en el ámbito global:
+def getPI():
+  PI = 3.1415
+getPI()
+print(PI)
+```
 
-<!-- ```{python} -->
-<!-- # Las variables globales pueden leerse desde un ámbito local: -->
-<!-- def a(): -->
-<!--   print(cte) -->
-<!-- cte = 1234 -->
-<!-- a() -->
-<!-- print(cte) -->
-<!-- ``` -->
+```{python}
+# Los ámbitos locales no pueden utilizar variables de otros ámbitos locales:
+def a():
+  phone = 444
+  b()
+  print(phone)
+def b():
+  phone = 555
+a()
+```
 
-<!-- ```{python} -->
-<!-- # Si necesitas modificar una variable global desde dentro de una función: -->
-<!-- def a(): -->
-<!--     global cte -->
-<!--     cte = 'Ahoar soy una Variable Global' -->
+```{python}
+# Las variables globales pueden leerse desde un ámbito local:
+def a():
+  print(cte)
+cte = 1234
+a()
+print(cte)
+```
 
-<!-- cte = 'Global' -->
-<!-- a() -->
-<!-- print(cte) -->
-<!-- ``` -->
+```{python}
+# Si necesitas modificar una variable global desde dentro de una función:
+def a():
+    global cte
+    cte = 'Ahora soy una Variable Global'
 
-<!-- ```{python} -->
-<!-- # Evitar que un programa se bloquee cuando recibe un error: -->
-<!-- def a(b): -->
-<!--     try: -->
-<!--         return 1/b -->
-<!--     except ZeroDivisionError: -->
-<!--         print('Error: b debe ser diferente de 0.') -->
-<!-- print(a(2)) -->
-<!-- print(a(0)) -->
-<!-- ``` -->
+cte = 'Global'
+a()
+print(cte)
+```
+
+```{python}
+# Funciones con Valores por Defecto:
+def saludar(nombre = "Paola"):
+    print(f"¡Hola, {nombre}!")
+
+saludar()
+saludar("Pedro")
+```
+
+```{python}
+# Funciones con Varios Valores de Retorno:
+def operaciones(a, b):
+    suma  = a + b
+    resta = a - b
+    return suma, resta
+
+suma, resta = operaciones(10, 2)
+print(f"Suma: {suma}\t| Resta: {resta}")
+```
+
+```{python}
+# Argumentos y Parámetros Arbitrarios:
+def sumar(*args):
+    return sum(args)
+
+print(sumar(1, 2, 3))
+print(sumar(4, 5))
+```
+
+```{python}
+# Evitar que un programa se bloquee cuando recibe un error:
+def a(b):
+    try:
+        return 1/b
+    except ZeroDivisionError:
+        print('Error: b debe ser diferente de 0.')
+print(a(2))
+print(a(0))
+```
+
+### *`*args`*
+
+El parámetro *args se usa en las funciones para pasar un número variable de argumentos posicionales. Dentro de la función,* args es una tupla que contiene todos los argumentos posicionales proporcionados.
+
+Características: - Permite pasar una cantidad variable de argumentos a una función. - Los argumentos se agrupan en una tupla dentro de la función.
+
+```{python}
+def imprimir_argumentos(*args):
+    for i, arg in enumerate(args):
+        print(f"Argumento {i}: {arg}")
+
+imprimir_argumentos('a', 'b', 'c')
+```
+
+### *`**kwargs`*
+
+El parámetro **kwargs se usa para pasar un número variable de argumentos con nombre (palabra clave). Dentro de la función,** kwargs es un diccionario que contiene todos los argumentos con nombre proporcionados.
+
+Características: - Permite pasar una cantidad variable de argumentos con nombre a una función. - Los argumentos se agrupan en un diccionario dentro de la función.
+
+```{python}
+def mostrar_info(**kwargs):
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+mostrar_info(nombre="Alice", edad=30, ciudad="Nueva York")
+```
+
+```{python}
+# Ejemplo combinado:
+def combinar(*args, **kwargs):
+    print("Argumentos posicionales:", args)
+    print("Argumentos con nombre:", kwargs)
+
+combinar(1, 2, 3, a="Uno", b="Dos", c="Tres")
+```
+
+### *Funciones Lambda*
+
+Son funciones anónimas y de una sola línea que pueden ser definidas usando la palabra clave `lambda argumentos: expresión`. Son especialmente útiles cuando se necesita una función pequeña y desechable que se puede definir en una expresión.
+
+```{python}
+cuadrado = lambda x: x ** 2
+print(cuadrado(5))
+
+multiplicar = lambda x, y: x * y
+print(multiplicar(4, 6))
+```
+
+**Uso con Funciones Integradas**
+
+Las funciones lambda son especialmente útiles cuando se combinan con ciertas funciones integradas de Python.
+
+1.  `map()`: Aplica una función a cada ítem de un iterable (como una lista) y devuelve un nuevo iterable con los resultados.
+
+```{python}
+numeros = list(range(11))
+cuadrados = map(lambda x: x**2, numeros)
+print(list(cuadrados))
+```
+
+2.  `filter()`: Filtra un iterable, permitiendo sólo los ítems que coincidan con una condición.
+
+```{python}
+pares = filter(lambda x: x%2 == 0, numeros)
+print(list(pares))
+```
+
+```{python}
+print(list(filter(lambda x: (x % 2 == 0) and (x > 7), numeros)))
+```
+
+3.  `reduce()`: Aplica una función a los ítems de un iterable, acumulando el resultado.
+
+```{python}
+from functools import reduce
+
+suma_total = reduce(lambda x,y: x + y, numeros)
+print(suma_total)
+```
+
+4.  `sorted()`: Las funciones lambda pueden ser usadas para personalizar el ordenamiento de listas.
+
+```{python}
+coordenadas = [(1, 2), (3, 4), (5, 1), (7, 3)]
+ordenado = sorted(coordenadas, key = lambda x: x[1])
+print(ordenado)
+```
+
+```{python}
+Notas = [
+    {'Nombre': 'Ana', 'Definitiva': 8},
+    {'Nombre': 'Juan', 'Definitiva': 6},
+    {'Nombre': 'Maria', 'Definitiva': 9}
+]
+print(sorted(Notas, key = lambda x: x['Definitiva']))
+```
+
+**Limitaciones**
+
+-   Una sola expresión: Las lambdas están limitadas a una única expresión. No pueden contener declaraciones ni múltiples líneas de código.
+-   Legibilidad: Aunque útiles para funciones cortas y simples, las lambdas pueden hacer el código más difícil de leer si se usan en exceso o de manera compleja.
+
+### *Decoradores*
+
+Los decoradores en Python son una herramienta poderosa que permite modificar el comportamiento de una función o método. Los decoradores permiten envolver una función en otra función, lo que facilita añadir funcionalidades adicionales de una manera muy elegante y reutilizable.
+
+```{python}
+def decorador(func):
+    def envoltura():
+        print("Antes de la función")
+        func()
+        print("Después de la función")
+    return envoltura
+@decorador
+def f():
+    print("Función original")
+f()
+```
+
+```{python}
+# Registro de Llamadas a Funciones:
+def registrar(func):
+    def envoltura(*args, **kwargs):
+        print(f"Llamando a {func.__name__} con {args} y {kwargs}")
+        resultado = func(*args, **kwargs)
+        print(f"{func.__name__} retornó {resultado}")
+        return resultado
+    return envoltura
+
+@registrar
+def suma(a, b):
+    return a + b
+
+suma(3, 5)
+```
+
+```{python}
+# Contador de Llamadas a una Función:
+def contador_de_llamadas(func):
+    def wrapper(*args, **kwargs):
+        wrapper.llamadas += 1
+        print(f"Llamada número: {wrapper.llamadas}")
+        return func(*args, **kwargs)
+    wrapper.llamadas = 0
+    return wrapper
+
+@contador_de_llamadas
+def mi_funcion():
+    print("Ejecutando la función")
+
+mi_funcion()
+mi_funcion()
+```
+
+```{python}
+# Medición de Tiempo de Ejecución:
+import time
+def medir_tiempo(func):
+    def envoltura(*args, **kwargs):
+        inicio = time.time()
+        resultado = func(*args, **kwargs)
+        fin = time.time()
+        print(f"{func.__name__} tomó {fin - inicio} segundos")
+        return resultado
+    return envoltura
+
+@medir_tiempo
+def contar_hasta(numero):
+    for i in range(numero):
+        pass
+    return numero
+
+contar_hasta(1000000)
+```
+
+```{python}
+# Memorización de Resultados:
+def memoize(func):
+    cache = {}
+    def envoltura(*args):
+        if args in cache:
+            return cache[args]
+        resultado = func(*args)
+        cache[args] = resultado
+        return resultado
+    return envoltura
+
+@memoize
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+print(fibonacci(30))
+```
+
+```{python}
+# Decoradores con Parámetros:
+def repetir(veces):
+    def decorador(func):
+        def envoltura(*args, **kwargs):
+            for _ in range(veces):
+                func(*args, **kwargs)
+        return envoltura
+    return decorador
+
+@repetir(3)
+def saludar():
+    print("¡Hola!")
+
+saludar()
+```
+
+¿Qué es **name**?
+
+En Python, **name** es una variable especial que se define automáticamente. Su valor depende de cómo se ejecuta el archivo:
+
+-   Si el archivo se ejecuta directamente, **name** es igual a "**main**".
+-   Si el archivo se importa como un módulo en otro archivo, **name** toma el nombre del archivo (sin la extensión .py).
+
+¿Por qué usar if **name** == "**main**":?
+
+El uso de esta construcción permite definir una sección de código que solo se ejecutará cuando el archivo se ejecute directamente, y no cuando se importe como módulo. Esto es útil para escribir scripts que pueden funcionar tanto como programas independientes como módulos reutilizables.
+
+```{python}
+# mi_script.py
+def saludo():
+    print("¡Hola, Mundo!")
+
+if __name__ == "__main__":
+    saludo()
+# Si ejecutas mi_script.py directamente, la salida será ¡Hola, Mundo!.
+# Si importas mi_script.py en otro archivo, no se ejecutará automáticamente saludo().
+```
+
+Otros comandos útiles en Python
+
+sys.argv
+
+El módulo sys proporciona acceso a algunos objetos utilizados o mantenidos por el intérprete de Python y a funciones que interaccionan fuertemente con el intérprete. sys.argv es una lista en la que cada elemento es una cadena de caracteres. Contiene los argumentos pasados al script.
+
+```{python}
+import sys
+
+def main():
+    print("Nombre del script:", sys.argv[0])
+    for i, arg in enumerate(sys.argv[1:], start=1):
+        print(f"Argumento {i}: {arg}")
+
+if __name__ == "__main__":
+    main()
+```
+
+os.environ
+
+El módulo os permite interactuar con el sistema operativo. os.environ es un diccionario que contiene las variables de entorno del sistema.
+
+```{python}
+import os
+
+def mostrar_variables_entorno():
+    for clave, valor in os.environ.items():
+        print(f"{clave}: {valor}")
+
+if __name__ == "__main__":
+    mostrar_variables_entorno()
+```
 
 Python Enhancement Proposal (PEP): https://peps.python.org/pep-0008/
 
