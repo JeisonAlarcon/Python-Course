@@ -6,3 +6,54 @@ jupyter: python3
 from:    markdown+emoji
 categories: [Numpy, Pandas, Polars, Modin, Vaex, Datatable, CuPy]
 ---
+
+
+```{python}
+import pandas as pd
+# Leer un archivo CSV
+
+df = pd.read_json('https://raw.githubusercontent.com/derhuerst/mtcars/master/index.json')
+df = pd.read_csv('https://raw.githubusercontent.com/pola-rs/polars/main/docs/data/iris.csv')
+```
+
+```{python}
+# Imprimir en pantalla las primeras 'n' filas:
+df.head(n = 2)
+```
+
+```{python}
+# Imprimir en pantalla las últimas 'n' filas:
+df.tail(n = 1)
+```
+
+```{python}
+# Selección de columnas
+df[['model', 'cyl']]
+```
+```{python}
+# Añadir una nueva columna
+df['new_column'] = df['column1'] + df['column2']
+
+# Eliminar una columna
+df = df.drop('column_to_drop', axis=1)
+```
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+```{python}
+
+```
+
+
+# Escribir un DataFrame a un archivo CSV
+df.to_csv('output.csv', index=False)

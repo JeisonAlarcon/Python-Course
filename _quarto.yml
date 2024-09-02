@@ -24,13 +24,16 @@ format:
       light: flatly
       dark:  darkly
     css: styles.css
+    # https://github.com/quarto-dev/quarto-cli/tree/main/src/resources/pandoc/highlight-styles
+    highlight-style:
+      light: scss/ayu-light.theme
+      dark:  scss/atom-one-dark.theme
     toc: false
     code-link: true
     anchor-sections: true
     fig-cap-location: margin
     reference-location: margin
     footnotes-hover: true
-    highlight-style: monokai
 
 execute:
   freeze: auto

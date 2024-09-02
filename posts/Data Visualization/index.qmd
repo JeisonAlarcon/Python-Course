@@ -4,5 +4,400 @@ date:    "2024-07-01"
 image:   "Featured_Image_Plotly-Seaborn.jpg"
 jupyter: python3
 from:    markdown+emoji
+format:
+  html:
+    code-fold: true
 categories: [Plotly, Seaborn, Folium, Matplotlib, Bokeh, Altair]
 ---
+
+```{python}
+import seaborn as sns
+import pandas  as pd
+import numpy   as np
+import plotly.express as px
+import altair as alt
+import matplotlib.pyplot as plt
+```
+
+# `Matplotlib`
+
+Matplotlib es una librería de visualización que permite generar gráficos y diagramas en Python. Proporciona una amplia gama de opciones para crear gráficos estáticos, animados e interactivos. Es muy versátil y se puede utilizar para representar datos en 2D y, con algunas limitaciones, en 3D.
+
+### Ventajas
+
+-   **Flexibilidad:** Permite personalizar gráficos en detalle, desde los estilos de línea hasta el formato de los ejes.
+-   **Amplia gama de gráficos:** Soporta una gran variedad de tipos de gráficos, incluyendo gráficos complejos como mapas de calor y gráficos de contorno.
+-   **Integración:** Se integra bien con otras librerías de Python como NumPy y pandas, facilitando la visualización de datos numéricos y de series temporales.
+-   **Interactividad:** Ofrece herramientas para crear gráficos interactivos y animaciones, lo que puede ser útil para presentaciones y exploración de datos.
+
+### Desventajas
+
+-   **Curva de aprendizaje:** Aunque es poderosa, puede ser compleja para los principiantes debido a la gran cantidad de opciones y configuraciones disponibles.
+
+-   **Rendimiento:** Para gráficos muy grandes o complejos, puede no ser tan eficiente como algunas alternativas.
+
+-   **Estética predeterminada:** Los gráficos generados por defecto pueden no ser estéticamente atractivos, requiriendo ajustes adicionales para mejorar su presentación.
+
+> -   [Road Map](https://github.com/mohd-faizy/Learn_Matplotlib)
+> -   [Matplotx](https://github.com/nschloe/matplotx)
+> -   [Top 50 Visualizations](https://www.machinelearningplus.com/plots/top-50-matplotlib-visualizations-the-master-plots-python/)
+> -   [Python Libraries for Data Visualization](https://github.com/javedali99/python-data-visualization?tab=readme-ov-file)
+
+```{python}
+import matplotlib.pyplot as plt
+df = pd.read_csv("https://github.com/selva86/datasets/raw/master/Cars93.csv")
+df.head()
+```
+
+::: panel-tabset
+## **Bar**
+
+```{python}
+#| label: fig-Matplotlib-bar
+#| fig-cap: "Car Weight Vs. MPG Scatterplot (Python)"
+# ==============================================================================
+# ------------------------------------ BAR -------------------------------------
+# ==============================================================================
+cols = [
+  '#292D3E', '#D0D0D0', '#6C7086', '#FF9E64', '#9ECE6A', '#7AA2F7', '#E0AF68', '#E84855',
+  '#EBDBB2', '#928374', '#FB4934', '#B8BB26', '#83A598', '#D3869B', '#FE8019'
+]
+
+THEME = 'https://raw.githubusercontent.com/meltred/matplotlib-themes/main/minimalistic/deeplearning.mplstyle'
+plt.style.use('default'); plt.style.use(THEME)
+plt.figure(figsize = (6, 4), dpi = 110) # (16, 10)
+plt.barh(
+  y = df['Make'].tail(15), width = df['Weight'].tail(15), color = cols, height = 0.6
+)
+for i, val in enumerate(df['Weight'].tail(15).values):
+  plt.text(
+    x = val, y = i, s = round(val), fontdict = {'size':7},
+    horizontalalignment = 'left', verticalalignment = 'center'
+  )
+plt.title('BAR CHART', fontsize = 12)
+plt.xlabel('Weight', fontsize = 10); plt.ylabel('Make', fontsize = 10)
+plt.xlim(1500, 4000)
+plt.show()
+```
+
+## **Stacked**
+
+```{python}
+#| label: Matplotlib-Stacked
+# ==============================================================================
+# ----------------------------------- STACKED ----------------------------------
+# ==============================================================================
+x_var  = 'Manufacturer'
+group  = 'Type'
+df_agg = df.loc[:, [x_var, group]].groupby(group)
+vals   = [df[x_var].values.tolist() for i, df in df_agg]
+
+THEME = 'https://raw.githubusercontent.com/andrematte/matte-matplotlib/main/Matte.mplstyle'
+plt.style.use('default'); plt.style.use(THEME)
+plt.figure(figsize = (8, 4), dpi = 110)
+cols = [plt.cm.Spectral(i/float(len(vals)-1)) for i in range(len(vals))]
+n, bins, patches = plt.hist(
+  vals, df[x_var].unique().__len__(), color = cols[:len(vals)],
+  stacked = True, linewidth = 0.2, edgecolor = 'white'
+)
+plt.title('STACKED BAR CHART', fontsize = 12)
+plt.xlabel('Manufacturer', fontsize = 10); plt.ylabel('Frequency', fontsize = 10)
+plt.ylim(0, 9)
+plt.xticks(
+  ticks = bins[:-1], labels = np.unique(df[x_var]).tolist(),
+  rotation = 70, horizontalalignment = 'center', fontsize = 6)
+plt.yticks(fontsize = 6)
+plt.legend(
+  {group:col for group, col in zip(np.unique(df[group]).tolist(), cols[:len(vals)])},
+  title = 'Type:', fontsize = 8
+)
+```
+
+## **Pie**
+
+```{python}
+#| label: Matplotlib-Pie
+# ==============================================================================
+# ------------------------------------ PIE -------------------------------------
+# ==============================================================================
+df_trans = df.groupby('Type').size()
+
+THEME = 'https://raw.githubusercontent.com/dracula/matplotlib/master/dracula.mplstyle'
+plt.style.use('default'); plt.style.use(THEME)
+plt.figure(figsize = (8, 8), dpi = 110)
+plt.pie(
+  x = df_trans.values, labels = df_trans.index.values,
+  explode = [0.1, 0, 0, 0, 0, 0], autopct = '%1.1f%%',
+  startangle = 180, hatch = ['|', 'xx', 'oO', 'O', '.', '*'],
+  radius = 1.1, pctdistance = 1.1, labeldistance = None
+)
+plt.title('PIE CHART', fontsize = 12)
+plt.legend(title = 'Type:', fontsize = 8)
+plt.show()
+```
+
+## **Hist**
+
+```{python}
+#| label: Matplotlib-Hist
+# ==============================================================================
+# ----------------------------------- HIST -------------------------------------
+# ==============================================================================
+THEME = 'https://raw.githubusercontent.com/andrematte/matte-matplotlib/main/Matte.mplstyle'
+plt.style.use('default'); plt.style.use(THEME)
+plt.figure(figsize = (8, 4), dpi= 110)
+plt.hist(x = df['Length'], bins = 12, color = '#61AFEF', linewidth = 0.2, edgecolor = 'white')
+plt.title('HISTOGRAM', fontsize = 12)
+plt.show()
+```
+
+## **Scatter**
+
+```{python}
+#| label: Matplotlib-Scatter
+# ==============================================================================
+# ---------------------------------- SCATTER ----------------------------------
+# ==============================================================================
+cats = df['Type'].unique()
+cols = ['#FFFFFF', '#4F88D0', '#A8ED74', '#FF9A1E', '#FF4D74', '#E67BD4']
+
+THEME = 'https://github.com/dhaitz/matplotlib-stylesheets/raw/master/pitayasmoothie-dark.mplstyle'
+plt.style.use('default'); plt.style.use(THEME)
+plt.figure(figsize = (7, 4), dpi = 120)
+for i, cat in enumerate(cats):
+  plt.scatter(
+    x = 'Price', y = 'Length',
+    s = 10, c = cols[i], label = str(cat),
+    data = df.loc[df['Type'] == cat,:]
+  )
+plt.gca().set(
+  xlim = (7, 49), ylim = (140, 220),
+  xlabel = 'Price', ylabel = 'Length',
+  xticks = np.arange(7, 49, step = 7), yticks = np.arange(140, 220, step = 20)
+)
+plt.title('SCATTER PLOT', fontsize = 12)
+plt.xticks(fontsize = 6); plt.yticks(fontsize = 6)
+plt.legend(title = 'Type:', fontsize = 8)
+plt.text(45, 140, "Data Source: (*)", fontsize = 5)
+plt.show()
+```
+:::
+
+# `Seaborn`
+
+Seaborn es una librería de visualización de datos en Python que proporciona una interfaz más sencilla y elegante sobre Matplotlib. Está diseñada para hacer que la creación de gráficos estadísticos sea más fácil y estéticamente agradable. Seaborn se basa en Matplotlib, pero ofrece funcionalidades adicionales y una integración más fluida con pandas.
+
+### Ventajas
+
+-   **Interfaz sencilla:** Ofrece una API de alto nivel que simplifica la creación de gráficos complejos con menos código.
+-   **Estética por defecto:** Los gráficos creados con Seaborn son visualmente más atractivos de manera predeterminada, con estilos y paletas de colores que mejoran la apariencia.
+-   **Integración con pandas:** Se integra fácilmente con estructuras de datos pandas, lo que simplifica la visualización de DataFrames.
+-   **Gráficos estadísticos avanzados:** Facilita la creación de gráficos como mapas de calor, gráficos de violín, y gráficos de pares (pair plots), que son útiles para el análisis estadístico.
+
+### Desventajas
+
+-   **Menos flexibilidad:** Aunque Seaborn simplifica la creación de gráficos, puede ser menos flexible que Matplotlib para personalizaciones muy específicas.
+-   **Dependencia de Matplotlib:** Seaborn está construido sobre Matplotlib, por lo que algunos aspectos avanzados aún requieren conocimientos de Matplotlib.
+-   **Rendimiento:** Para gráficos muy grandes o altamente personalizados, Seaborn puede no ser tan eficiente como otras herramientas más especializadas.
+
+::: panel-tabset
+## **Bar**
+
+```{python}
+# ==============================================================================
+# ------------------------------------ BAR -------------------------------------
+# ==============================================================================
+cols = [
+  '#292D3E', '#D0D0D0', '#6C7086', '#FF9E64', '#9ECE6A', '#7AA2F7', '#E0AF68', '#E84855',
+  '#EBDBB2', '#928374', '#FB4934', '#B8BB26', '#83A598', '#D3869B', '#FE8019'
+]
+
+THEME = 'https://raw.githubusercontent.com/meltred/matplotlib-themes/main/minimalistic/deeplearning.mplstyle'
+plt.style.use('default'); plt.style.use(THEME)
+plt.figure(figsize = (6, 4), dpi = 110)
+ax = sns.barplot(
+  data = df.tail(15), y = "Make", x = "Weight", hue = "Make", orient = "y", palette = cols
+)
+for i in range(15): ax.bar_label(ax.containers[i], fontsize = 7)
+plt.title('BAR CHART', fontsize = 12)
+plt.xlabel('Weight', fontsize = 10); plt.ylabel('Make', fontsize = 10)
+plt.xticks(fontsize = 6); plt.yticks(fontsize = 6)
+plt.xlim(1500, 4000)
+plt.show()
+```
+
+## **Stacked**
+
+```{python}
+# ==============================================================================
+# ----------------------------------- STACKED ----------------------------------
+# ==============================================================================
+THEME = 'https://raw.githubusercontent.com/andrematte/matte-matplotlib/main/Matte.mplstyle'
+plt.style.use('default'); plt.style.use(THEME)
+plt.figure(figsize = (6, 4), dpi = 120)
+sns.displot(data = df, x = "Length", color = "Type", hue = "Type")
+plt.title('STACKED BAR CHART', fontsize = 12)
+plt.xlabel('Manufacturer', fontsize = 10); plt.ylabel('Frequency', fontsize = 10)
+plt.ylim(0, 9)
+plt.show()
+```
+
+## **Boxplot**
+
+```{python}
+THEME = 'https://raw.githubusercontent.com/dracula/matplotlib/master/dracula.mplstyle'
+plt.style.use('default'); plt.style.use(THEME)
+plt.figure(figsize = (6, 4), dpi= 125)
+sns.boxplot(
+  data = df, x = "Type", y = "Length", hue = "Origin", palette = ["#FF6B6B", "#45B7D1"],
+  width = 0.9, gap = 0.2, linecolor = "#E7F3FF", linewidth = 0.7
+)
+```
+
+## **Hist**
+
+```{python}
+# ==============================================================================
+# ----------------------------------- HIST -------------------------------------
+# ==============================================================================
+cols = ['#FFFFFF', '#4F88D0', '#A8ED74', '#FF9A1E', '#FF4D74', '#E67BD4']
+
+THEME = 'https://raw.githubusercontent.com/dracula/matplotlib/master/dracula.mplstyle'
+plt.style.use('default'); plt.style.use(THEME)
+plt.figure(figsize = (6, 4), dpi = 120)
+sns.histplot(
+  data = df, x = "Length", hue = "Type", bins = 12, kde = True,
+  multiple = "stack", fill = True, palette = cols
+)
+plt.title('HISTOGRAM', fontsize = 12)
+plt.show()
+```
+
+## **Scatter**
+
+```{python}
+# ==============================================================================
+# ---------------------------------- SCATTER ----------------------------------
+# ==============================================================================
+cols = ['#FFFFFF', '#4F88D0', '#A8ED74', '#FF9A1E', '#FF4D74', '#E67BD4']
+
+THEME = 'https://github.com/dhaitz/matplotlib-stylesheets/raw/master/pitayasmoothie-dark.mplstyle'
+plt.style.use('default'); plt.style.use(THEME)
+plt.figure(figsize = (6, 4), dpi= 120)
+sns.jointplot(
+  data = df, x = "Price", y = "Length", hue = "Type", space = 0.05,
+  xlim = (7, 49), ylim = (140, 220), palette = cols
+) # scatterplot,
+plt.title('SCATTER PLOT', fontsize = 12)
+plt.xticks(fontsize = 6); plt.yticks(fontsize = 6)
+plt.legend(title = 'Type:', fontsize = 8)
+plt.show()
+```
+:::
+
+# `Plotly`
+
+Plotly es una librería de visualización de datos que permite crear gráficos interactivos, visualizaciones 3D y dashboards web. Su objetivo principal es ofrecer herramientas para la creación de visualizaciones que los usuarios puedan explorar de manera interactiva, lo que mejora la comprensión de los datos y facilita la presentación de resultados.
+
+### Ventajas
+
+-   **Interactividad:** Los gráficos son altamente interactivos, permitiendo a los usuarios hacer clic, hacer zoom, arrastrar y filtrar datos.
+-   **Visualizaciones 3D:** Soporta gráficos en 3D, lo que es útil para representar datos multidimensionales.
+-   **Facilidad de integración:** Puede integrarse fácilmente con plataformas web y aplicaciones, lo que facilita la creación de dashboards y aplicaciones interactivas.
+-   **Amplia gama de gráficos:** Ofrece una gran variedad de tipos de gráficos, desde gráficos básicos hasta visualizaciones avanzadas como mapas y gráficos de red.
+
+### Desventajas
+
+-   **Complejidad de configuración:** La configuración de algunas características interactivas y personalizaciones puede ser más compleja en comparación con otras librerías.
+-   **Rendimiento:** Para conjuntos de datos extremadamente grandes o complejos, los gráficos interactivos pueden volverse lentos o poco responsivos.
+-   **Dependencia de JavaScript:** Para aprovechar al máximo las capacidades de Plotly, es necesario entender algo de JavaScript y HTML, especialmente al integrar gráficos en aplicaciones web.
+
+### Extensiones o Plugins
+
+-   [Cufflinks](https://github.com/santosjorge/cufflinks)
+
+# `Bokeh`
+
+Bokeh es una librería de visualización en Python que permite crear gráficos interactivos y aplicaciones web. Está diseñada para trabajar con grandes conjuntos de datos y se integra bien con otras librerías de datos como pandas. Bokeh proporciona una API que permite crear gráficos sofisticados y altamente interactivos que se pueden mostrar en navegadores web.
+
+### Ventajas
+
+-   **Interactividad:** Bokeh permite crear gráficos altamente interactivos que responden a acciones del usuario como clics y desplazamientos, mejorando la exploración de datos.
+-   **Desempeño:** Está diseñado para manejar grandes conjuntos de datos de manera eficiente y puede generar visualizaciones que se renderizan rápidamente en el navegador.
+-   **Flexibilidad:** Ofrece una amplia gama de herramientas para personalizar gráficos, desde estilos básicos hasta configuraciones avanzadas para ajustarse a necesidades específicas.
+-   **Integración con web:** Los gráficos y dashboards creados con Bokeh se pueden integrar fácilmente en aplicaciones web utilizando HTML y JavaScript.
+
+### Desventajas
+
+-   **Curva de aprendizaje:** La API de Bokeh puede ser más compleja que la de otras librerías como Matplotlib o Seaborn, especialmente cuando se trata de configuraciones avanzadas.
+-   **Limitaciones en gráficos 3D:** Aunque Bokeh es excelente para gráficos 2D interactivos, tiene limitaciones en la creación de visualizaciones tridimensionales en comparación con otras librerías especializadas en 3D.
+-   **Compatibilidad:** Aunque los gráficos se renderizan en navegadores web, puede haber problemas de compatibilidad o de rendimiento en navegadores más antiguos o menos comunes.
+
+### Extensiones o Plugins
+
+-   [Holoviews](https://holoviews.org/index.html)
+-   [Panel](https://panel.holoviz.org/index.html)
+
+```{python}
+from bokeh.plotting import figure, show
+
+N = 4000
+x = np.random.random(size=N) * 100
+y = np.random.random(size=N) * 100
+radii = np.random.random(size=N) * 1.5
+colors = np.array([(r, g, 150) for r, g in zip(50+2*x, 30+2*y)], dtype="uint8")
+
+TOOLS="hover,crosshair,pan,wheel_zoom,zoom_in,zoom_out,box_zoom,undo,redo,reset,tap,save,box_select,poly_select,lasso_select,examine,help"
+
+p = figure(tools=TOOLS)
+
+p.circle(x, y, radius=radii,
+         fill_color=colors, fill_alpha=0.6,
+         line_color=None)
+
+# show(p)
+```
+
+# `Altair`
+
+Altair es una librería de visualización declarativa en Python que se enfoca en facilitar la creación de gráficos y visualizaciones de datos mediante una API simple y basada en la especificación de intenciones. Utiliza la gramática de gráficos para describir cómo deben visualizarse los datos, lo que permite a los usuarios centrarse en el análisis y la representación de los datos en lugar de en la programación de gráficos detallados.
+
+### Ventajas
+
+-   **Sintaxis simple y declarativa:** La API de Altair es fácil de usar y permite especificar visualizaciones mediante la declaración de intenciones en lugar de manipular detalles gráficos individuales.
+-   **Interactividad:** Ofrece interactividad básica y permite la creación de gráficos que responden a acciones del usuario, como selección y zoom.
+-   **Visualización de datos:** Diseñado para trabajar bien con grandes conjuntos de datos y soporta la visualización en diferentes formas de datos.
+-   **Integración con pandas:** Se integra de forma nativa con DataFrames de pandas, facilitando la visualización de datos tabulares.
+
+### Desventajas
+
+-   **Flexibilidad limitada:** Aunque es fácil de usar para muchas tareas comunes, puede ser menos flexible para personalizaciones avanzadas en comparación con librerías más detalladas como Matplotlib o Plotly.
+-   **Interactividad avanzada:** La interactividad proporcionada por Altair es más básica y puede no ser suficiente para aplicaciones que requieren interacciones complejas o personalizadas.
+-   **Dependencia del navegador:** Las visualizaciones de Altair se renderizan en el navegador, lo que puede no ser ideal para todos los entornos de trabajo, especialmente si se necesita una visualización estática o en otros formatos.
+
+```{python}
+import altair as alt
+from vega_datasets import data
+
+source = data.cars()
+
+brush = alt.selection_interval()
+
+points = alt.Chart(source).mark_point().encode(
+    x='Horsepower',
+    y='Miles_per_Gallon',
+    color=alt.condition(brush, 'Origin', alt.value('lightgray'))
+).add_params(
+    brush
+)
+
+bars = alt.Chart(source).mark_bar().encode(
+    y='Origin',
+    color='Origin',
+    x='count(Origin)'
+).transform_filter(
+    brush
+)
+
+points & bars
+```

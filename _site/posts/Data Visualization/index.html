@@ -21,10 +21,44 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -36,10 +70,12 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -67,12 +103,18 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
 
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="floating nav-fixed">
+<body class="floating nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -106,6 +148,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -150,21 +193,768 @@ ul.task-list li input[type="checkbox"] {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#matplotlib" id="toc-matplotlib" class="nav-link active" data-scroll-target="#matplotlib"><code>Matplotlib</code></a>
+  <ul class="collapse">
+  <li><a href="#ventajas" id="toc-ventajas" class="nav-link" data-scroll-target="#ventajas">Ventajas</a></li>
+  <li><a href="#desventajas" id="toc-desventajas" class="nav-link" data-scroll-target="#desventajas">Desventajas</a></li>
+  </ul></li>
+  <li><a href="#seaborn" id="toc-seaborn" class="nav-link" data-scroll-target="#seaborn"><code>Seaborn</code></a>
+  <ul class="collapse">
+  <li><a href="#ventajas-1" id="toc-ventajas-1" class="nav-link" data-scroll-target="#ventajas-1">Ventajas</a></li>
+  <li><a href="#desventajas-1" id="toc-desventajas-1" class="nav-link" data-scroll-target="#desventajas-1">Desventajas</a></li>
+  </ul></li>
+  <li><a href="#plotly" id="toc-plotly" class="nav-link" data-scroll-target="#plotly"><code>Plotly</code></a>
+  <ul class="collapse">
+  <li><a href="#ventajas-2" id="toc-ventajas-2" class="nav-link" data-scroll-target="#ventajas-2">Ventajas</a></li>
+  <li><a href="#desventajas-2" id="toc-desventajas-2" class="nav-link" data-scroll-target="#desventajas-2">Desventajas</a></li>
+  <li><a href="#extensiones-o-plugins" id="toc-extensiones-o-plugins" class="nav-link" data-scroll-target="#extensiones-o-plugins">Extensiones o Plugins</a></li>
+  </ul></li>
+  <li><a href="#bokeh" id="toc-bokeh" class="nav-link" data-scroll-target="#bokeh"><code>Bokeh</code></a>
+  <ul class="collapse">
+  <li><a href="#ventajas-3" id="toc-ventajas-3" class="nav-link" data-scroll-target="#ventajas-3">Ventajas</a></li>
+  <li><a href="#desventajas-3" id="toc-desventajas-3" class="nav-link" data-scroll-target="#desventajas-3">Desventajas</a></li>
+  <li><a href="#extensiones-o-plugins-1" id="toc-extensiones-o-plugins-1" class="nav-link" data-scroll-target="#extensiones-o-plugins-1">Extensiones o Plugins</a></li>
+  </ul></li>
+  <li><a href="#altair" id="toc-altair" class="nav-link" data-scroll-target="#altair"><code>Altair</code></a>
+  <ul class="collapse">
+  <li><a href="#ventajas-4" id="toc-ventajas-4" class="nav-link" data-scroll-target="#ventajas-4">Ventajas</a></li>
+  <li><a href="#desventajas-4" id="toc-desventajas-4" class="nav-link" data-scroll-target="#desventajas-4">Desventajas</a></li>
+  </ul></li>
+  </ul>
+</nav>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
 
 
 
 
 
+<div id="d20d2074" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas  <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy   <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="matplotlib" class="level1 page-columns page-full">
+<h1><code>Matplotlib</code></h1>
+<p>Matplotlib es una librería de visualización que permite generar gráficos y diagramas en Python. Proporciona una amplia gama de opciones para crear gráficos estáticos, animados e interactivos. Es muy versátil y se puede utilizar para representar datos en 2D y, con algunas limitaciones, en 3D.</p>
+<section id="ventajas" class="level3">
+<h3 class="anchored" data-anchor-id="ventajas">Ventajas</h3>
+<ul>
+<li><strong>Flexibilidad:</strong> Permite personalizar gráficos en detalle, desde los estilos de línea hasta el formato de los ejes.</li>
+<li><strong>Amplia gama de gráficos:</strong> Soporta una gran variedad de tipos de gráficos, incluyendo gráficos complejos como mapas de calor y gráficos de contorno.</li>
+<li><strong>Integración:</strong> Se integra bien con otras librerías de Python como NumPy y pandas, facilitando la visualización de datos numéricos y de series temporales.</li>
+<li><strong>Interactividad:</strong> Ofrece herramientas para crear gráficos interactivos y animaciones, lo que puede ser útil para presentaciones y exploración de datos.</li>
+</ul>
+</section>
+<section id="desventajas" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="desventajas">Desventajas</h3>
+<ul>
+<li><p><strong>Curva de aprendizaje:</strong> Aunque es poderosa, puede ser compleja para los principiantes debido a la gran cantidad de opciones y configuraciones disponibles.</p></li>
+<li><p><strong>Rendimiento:</strong> Para gráficos muy grandes o complejos, puede no ser tan eficiente como algunas alternativas.</p></li>
+<li><p><strong>Estética predeterminada:</strong> Los gráficos generados por defecto pueden no ser estéticamente atractivos, requiriendo ajustes adicionales para mejorar su presentación.</p></li>
+</ul>
+<blockquote class="blockquote">
+<ul>
+<li><a href="https://github.com/mohd-faizy/Learn_Matplotlib">Road Map</a></li>
+<li><a href="https://github.com/nschloe/matplotx">Matplotx</a></li>
+<li><a href="https://www.machinelearningplus.com/plots/top-50-matplotlib-visualizations-the-master-plots-python/">Top 50 Visualizations</a></li>
+<li><a href="https://github.com/javedali99/python-data-visualization?tab=readme-ov-file">Python Libraries for Data Visualization</a></li>
+</ul>
+</blockquote>
+<div id="8e4d4174" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"https://github.com/selva86/datasets/raw/master/Cars93.csv"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
 
 
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Manufacturer</th>
+<th data-quarto-table-cell-role="th">Model</th>
+<th data-quarto-table-cell-role="th">Type</th>
+<th data-quarto-table-cell-role="th">Min.Price</th>
+<th data-quarto-table-cell-role="th">Price</th>
+<th data-quarto-table-cell-role="th">Max.Price</th>
+<th data-quarto-table-cell-role="th">MPG.city</th>
+<th data-quarto-table-cell-role="th">MPG.highway</th>
+<th data-quarto-table-cell-role="th">AirBags</th>
+<th data-quarto-table-cell-role="th">DriveTrain</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">Passengers</th>
+<th data-quarto-table-cell-role="th">Length</th>
+<th data-quarto-table-cell-role="th">Wheelbase</th>
+<th data-quarto-table-cell-role="th">Width</th>
+<th data-quarto-table-cell-role="th">Turn.circle</th>
+<th data-quarto-table-cell-role="th">Rear.seat.room</th>
+<th data-quarto-table-cell-role="th">Luggage.room</th>
+<th data-quarto-table-cell-role="th">Weight</th>
+<th data-quarto-table-cell-role="th">Origin</th>
+<th data-quarto-table-cell-role="th">Make</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Acura</td>
+<td>Integra</td>
+<td>Small</td>
+<td>12.9</td>
+<td>15.9</td>
+<td>18.8</td>
+<td>25</td>
+<td>31</td>
+<td>NaN</td>
+<td>Front</td>
+<td>...</td>
+<td>5</td>
+<td>177</td>
+<td>102</td>
+<td>68</td>
+<td>37</td>
+<td>26.5</td>
+<td>11.0</td>
+<td>2705</td>
+<td>non-USA</td>
+<td>Acura Integra</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Acura</td>
+<td>Legend</td>
+<td>Midsize</td>
+<td>29.2</td>
+<td>33.9</td>
+<td>38.7</td>
+<td>18</td>
+<td>25</td>
+<td>Driver &amp; Passenger</td>
+<td>Front</td>
+<td>...</td>
+<td>5</td>
+<td>195</td>
+<td>115</td>
+<td>71</td>
+<td>38</td>
+<td>30.0</td>
+<td>15.0</td>
+<td>3560</td>
+<td>non-USA</td>
+<td>Acura Legend</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Audi</td>
+<td>90</td>
+<td>Compact</td>
+<td>25.9</td>
+<td>29.1</td>
+<td>32.3</td>
+<td>20</td>
+<td>26</td>
+<td>Driver only</td>
+<td>Front</td>
+<td>...</td>
+<td>5</td>
+<td>180</td>
+<td>102</td>
+<td>67</td>
+<td>37</td>
+<td>28.0</td>
+<td>14.0</td>
+<td>3375</td>
+<td>non-USA</td>
+<td>Audi 90</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Audi</td>
+<td>100</td>
+<td>Midsize</td>
+<td>30.8</td>
+<td>37.7</td>
+<td>44.6</td>
+<td>19</td>
+<td>26</td>
+<td>Driver &amp; Passenger</td>
+<td>Front</td>
+<td>...</td>
+<td>6</td>
+<td>193</td>
+<td>106</td>
+<td>70</td>
+<td>37</td>
+<td>31.0</td>
+<td>17.0</td>
+<td>3405</td>
+<td>non-USA</td>
+<td>Audi 100</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>BMW</td>
+<td>535i</td>
+<td>Midsize</td>
+<td>23.7</td>
+<td>30.0</td>
+<td>36.2</td>
+<td>22</td>
+<td>30</td>
+<td>Driver only</td>
+<td>Rear</td>
+<td>...</td>
+<td>4</td>
+<td>186</td>
+<td>109</td>
+<td>69</td>
+<td>39</td>
+<td>27.0</td>
+<td>13.0</td>
+<td>3640</td>
+<td>non-USA</td>
+<td>BMW 535i</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 27 columns</p>
+</div>
+</div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset page-columns page-full">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true"><strong>Bar</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false"><strong>Stacked</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false"><strong>Pie</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false"><strong>Hist</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false"><strong>Scatter</strong></a></li></ul>
+<div class="tab-content page-columns page-full">
+<div id="tabset-1-1" class="tab-pane active page-columns page-full" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div id="cell-fig-Matplotlib-bar" class="cell page-columns page-full" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------ BAR -------------------------------------</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> [</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">'#292D3E'</span>, <span class="st">'#D0D0D0'</span>, <span class="st">'#6C7086'</span>, <span class="st">'#FF9E64'</span>, <span class="st">'#9ECE6A'</span>, <span class="st">'#7AA2F7'</span>, <span class="st">'#E0AF68'</span>, <span class="st">'#E84855'</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">'#EBDBB2'</span>, <span class="st">'#928374'</span>, <span class="st">'#FB4934'</span>, <span class="st">'#B8BB26'</span>, <span class="st">'#83A598'</span>, <span class="st">'#D3869B'</span>, <span class="st">'#FE8019'</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>THEME <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/meltred/matplotlib-themes/main/minimalistic/deeplearning.mplstyle'</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'default'</span>)<span class="op">;</span> plt.style.use(THEME)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">6</span>, <span class="dv">4</span>), dpi <span class="op">=</span> <span class="dv">110</span>) <span class="co"># (16, 10)</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>plt.barh(</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  y <span class="op">=</span> df[<span class="st">'Make'</span>].tail(<span class="dv">15</span>), width <span class="op">=</span> df[<span class="st">'Weight'</span>].tail(<span class="dv">15</span>), color <span class="op">=</span> cols, height <span class="op">=</span> <span class="fl">0.6</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, val <span class="kw">in</span> <span class="bu">enumerate</span>(df[<span class="st">'Weight'</span>].tail(<span class="dv">15</span>).values):</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  plt.text(</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> val, y <span class="op">=</span> i, s <span class="op">=</span> <span class="bu">round</span>(val), fontdict <span class="op">=</span> {<span class="st">'size'</span>:<span class="dv">7</span>},</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    horizontalalignment <span class="op">=</span> <span class="st">'left'</span>, verticalalignment <span class="op">=</span> <span class="st">'center'</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'BAR CHART'</span>, fontsize <span class="op">=</span> <span class="dv">12</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Weight'</span>, fontsize <span class="op">=</span> <span class="dv">10</span>)<span class="op">;</span> plt.ylabel(<span class="st">'Make'</span>, fontsize <span class="op">=</span> <span class="dv">10</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">1500</span>, <span class="dv">4000</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display page-columns page-full">
+<div id="fig-matplotlib-bar" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-matplotlib-bar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-matplotlib-bar-output-1.png" width="705" height="421" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-matplotlib-bar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Car Weight Vs. MPG Scatterplot (Python)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div id="cell-Matplotlib-Stacked" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------------- STACKED ----------------------------------</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>x_var  <span class="op">=</span> <span class="st">'Manufacturer'</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>group  <span class="op">=</span> <span class="st">'Type'</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>df_agg <span class="op">=</span> df.loc[:, [x_var, group]].groupby(group)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>vals   <span class="op">=</span> [df[x_var].values.tolist() <span class="cf">for</span> i, df <span class="kw">in</span> df_agg]</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>THEME <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/andrematte/matte-matplotlib/main/Matte.mplstyle'</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'default'</span>)<span class="op">;</span> plt.style.use(THEME)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">8</span>, <span class="dv">4</span>), dpi <span class="op">=</span> <span class="dv">110</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> [plt.cm.Spectral(i<span class="op">/</span><span class="bu">float</span>(<span class="bu">len</span>(vals)<span class="op">-</span><span class="dv">1</span>)) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(vals))]</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>n, bins, patches <span class="op">=</span> plt.hist(</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  vals, df[x_var].unique().<span class="fu">__len__</span>(), color <span class="op">=</span> cols[:<span class="bu">len</span>(vals)],</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  stacked <span class="op">=</span> <span class="va">True</span>, linewidth <span class="op">=</span> <span class="fl">0.2</span>, edgecolor <span class="op">=</span> <span class="st">'white'</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'STACKED BAR CHART'</span>, fontsize <span class="op">=</span> <span class="dv">12</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Manufacturer'</span>, fontsize <span class="op">=</span> <span class="dv">10</span>)<span class="op">;</span> plt.ylabel(<span class="st">'Frequency'</span>, fontsize <span class="op">=</span> <span class="dv">10</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">9</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>plt.xticks(</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  ticks <span class="op">=</span> bins[:<span class="op">-</span><span class="dv">1</span>], labels <span class="op">=</span> np.unique(df[x_var]).tolist(),</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  rotation <span class="op">=</span> <span class="dv">70</span>, horizontalalignment <span class="op">=</span> <span class="st">'center'</span>, fontsize <span class="op">=</span> <span class="dv">6</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>plt.yticks(fontsize <span class="op">=</span> <span class="dv">6</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>plt.legend(</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  {group:col <span class="cf">for</span> group, col <span class="kw">in</span> <span class="bu">zip</span>(np.unique(df[group]).tolist(), cols[:<span class="bu">len</span>(vals)])},</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  title <span class="op">=</span> <span class="st">'Type:'</span>, fontsize <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/matplotlib-stacked-output-1.png" id="matplotlib-stacked" class="figure-img" width="723" height="458"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div id="cell-Matplotlib-Pie" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------ PIE -------------------------------------</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>df_trans <span class="op">=</span> df.groupby(<span class="st">'Type'</span>).size()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>THEME <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/dracula/matplotlib/master/dracula.mplstyle'</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'default'</span>)<span class="op">;</span> plt.style.use(THEME)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">8</span>, <span class="dv">8</span>), dpi <span class="op">=</span> <span class="dv">110</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>plt.pie(</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> df_trans.values, labels <span class="op">=</span> df_trans.index.values,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  explode <span class="op">=</span> [<span class="fl">0.1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], autopct <span class="op">=</span> <span class="st">'</span><span class="sc">%1.1f%%</span><span class="st">'</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  startangle <span class="op">=</span> <span class="dv">180</span>, hatch <span class="op">=</span> [<span class="st">'|'</span>, <span class="st">'xx'</span>, <span class="st">'oO'</span>, <span class="st">'O'</span>, <span class="st">'.'</span>, <span class="st">'*'</span>],</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  radius <span class="op">=</span> <span class="fl">1.1</span>, pctdistance <span class="op">=</span> <span class="fl">1.1</span>, labeldistance <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'PIE CHART'</span>, fontsize <span class="op">=</span> <span class="dv">12</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>plt.legend(title <span class="op">=</span> <span class="st">'Type:'</span>, fontsize <span class="op">=</span> <span class="dv">8</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/matplotlib-pie-output-1.png" id="matplotlib-pie" class="figure-img" width="699" height="723"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<div id="cell-Matplotlib-Hist" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------------- HIST -------------------------------------</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>THEME <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/andrematte/matte-matplotlib/main/Matte.mplstyle'</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'default'</span>)<span class="op">;</span> plt.style.use(THEME)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">8</span>, <span class="dv">4</span>), dpi<span class="op">=</span> <span class="dv">110</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.hist(x <span class="op">=</span> df[<span class="st">'Length'</span>], bins <span class="op">=</span> <span class="dv">12</span>, color <span class="op">=</span> <span class="st">'#61AFEF'</span>, linewidth <span class="op">=</span> <span class="fl">0.2</span>, edgecolor <span class="op">=</span> <span class="st">'white'</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'HISTOGRAM'</span>, fontsize <span class="op">=</span> <span class="dv">12</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/matplotlib-hist-output-1.png" id="matplotlib-hist" class="figure-img" width="712" height="390"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
+<div id="cell-Matplotlib-Scatter" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------- SCATTER ----------------------------------</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>cats <span class="op">=</span> df[<span class="st">'Type'</span>].unique()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> [<span class="st">'#FFFFFF'</span>, <span class="st">'#4F88D0'</span>, <span class="st">'#A8ED74'</span>, <span class="st">'#FF9A1E'</span>, <span class="st">'#FF4D74'</span>, <span class="st">'#E67BD4'</span>]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>THEME <span class="op">=</span> <span class="st">'https://github.com/dhaitz/matplotlib-stylesheets/raw/master/pitayasmoothie-dark.mplstyle'</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'default'</span>)<span class="op">;</span> plt.style.use(THEME)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">7</span>, <span class="dv">4</span>), dpi <span class="op">=</span> <span class="dv">120</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, cat <span class="kw">in</span> <span class="bu">enumerate</span>(cats):</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  plt.scatter(</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="st">'Price'</span>, y <span class="op">=</span> <span class="st">'Length'</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> <span class="dv">10</span>, c <span class="op">=</span> cols[i], label <span class="op">=</span> <span class="bu">str</span>(cat),</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> df.loc[df[<span class="st">'Type'</span>] <span class="op">==</span> cat,:]</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>plt.gca().<span class="bu">set</span>(</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  xlim <span class="op">=</span> (<span class="dv">7</span>, <span class="dv">49</span>), ylim <span class="op">=</span> (<span class="dv">140</span>, <span class="dv">220</span>),</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  xlabel <span class="op">=</span> <span class="st">'Price'</span>, ylabel <span class="op">=</span> <span class="st">'Length'</span>,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  xticks <span class="op">=</span> np.arange(<span class="dv">7</span>, <span class="dv">49</span>, step <span class="op">=</span> <span class="dv">7</span>), yticks <span class="op">=</span> np.arange(<span class="dv">140</span>, <span class="dv">220</span>, step <span class="op">=</span> <span class="dv">20</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'SCATTER PLOT'</span>, fontsize <span class="op">=</span> <span class="dv">12</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>plt.xticks(fontsize <span class="op">=</span> <span class="dv">6</span>)<span class="op">;</span> plt.yticks(fontsize <span class="op">=</span> <span class="dv">6</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>plt.legend(title <span class="op">=</span> <span class="st">'Type:'</span>, fontsize <span class="op">=</span> <span class="dv">8</span>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>plt.text(<span class="dv">45</span>, <span class="dv">140</span>, <span class="st">"Data Source: (*)"</span>, fontsize <span class="op">=</span> <span class="dv">5</span>)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/matplotlib-scatter-output-1.png" id="matplotlib-scatter" class="figure-img" width="719" height="455"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="seaborn" class="level1">
+<h1><code>Seaborn</code></h1>
+<p>Seaborn es una librería de visualización de datos en Python que proporciona una interfaz más sencilla y elegante sobre Matplotlib. Está diseñada para hacer que la creación de gráficos estadísticos sea más fácil y estéticamente agradable. Seaborn se basa en Matplotlib, pero ofrece funcionalidades adicionales y una integración más fluida con pandas.</p>
+<section id="ventajas-1" class="level3">
+<h3 class="anchored" data-anchor-id="ventajas-1">Ventajas</h3>
+<ul>
+<li><strong>Interfaz sencilla:</strong> Ofrece una API de alto nivel que simplifica la creación de gráficos complejos con menos código.</li>
+<li><strong>Estética por defecto:</strong> Los gráficos creados con Seaborn son visualmente más atractivos de manera predeterminada, con estilos y paletas de colores que mejoran la apariencia.</li>
+<li><strong>Integración con pandas:</strong> Se integra fácilmente con estructuras de datos pandas, lo que simplifica la visualización de DataFrames.</li>
+<li><strong>Gráficos estadísticos avanzados:</strong> Facilita la creación de gráficos como mapas de calor, gráficos de violín, y gráficos de pares (pair plots), que son útiles para el análisis estadístico.</li>
+</ul>
+</section>
+<section id="desventajas-1" class="level3">
+<h3 class="anchored" data-anchor-id="desventajas-1">Desventajas</h3>
+<ul>
+<li><strong>Menos flexibilidad:</strong> Aunque Seaborn simplifica la creación de gráficos, puede ser menos flexible que Matplotlib para personalizaciones muy específicas.</li>
+<li><strong>Dependencia de Matplotlib:</strong> Seaborn está construido sobre Matplotlib, por lo que algunos aspectos avanzados aún requieren conocimientos de Matplotlib.</li>
+<li><strong>Rendimiento:</strong> Para gráficos muy grandes o altamente personalizados, Seaborn puede no ser tan eficiente como otras herramientas más especializadas.</li>
+</ul>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true"><strong>Bar</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false"><strong>Stacked</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false"><strong>Boxplot</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false"><strong>Hist</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-5" role="tab" aria-controls="tabset-2-5" aria-selected="false"><strong>Scatter</strong></a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div id="7454067f" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------ BAR -------------------------------------</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> [</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">'#292D3E'</span>, <span class="st">'#D0D0D0'</span>, <span class="st">'#6C7086'</span>, <span class="st">'#FF9E64'</span>, <span class="st">'#9ECE6A'</span>, <span class="st">'#7AA2F7'</span>, <span class="st">'#E0AF68'</span>, <span class="st">'#E84855'</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">'#EBDBB2'</span>, <span class="st">'#928374'</span>, <span class="st">'#FB4934'</span>, <span class="st">'#B8BB26'</span>, <span class="st">'#83A598'</span>, <span class="st">'#D3869B'</span>, <span class="st">'#FE8019'</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>THEME <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/meltred/matplotlib-themes/main/minimalistic/deeplearning.mplstyle'</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'default'</span>)<span class="op">;</span> plt.style.use(THEME)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">6</span>, <span class="dv">4</span>), dpi <span class="op">=</span> <span class="dv">110</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.barplot(</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  data <span class="op">=</span> df.tail(<span class="dv">15</span>), y <span class="op">=</span> <span class="st">"Make"</span>, x <span class="op">=</span> <span class="st">"Weight"</span>, hue <span class="op">=</span> <span class="st">"Make"</span>, orient <span class="op">=</span> <span class="st">"y"</span>, palette <span class="op">=</span> cols</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">15</span>): ax.bar_label(ax.containers[i], fontsize <span class="op">=</span> <span class="dv">7</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'BAR CHART'</span>, fontsize <span class="op">=</span> <span class="dv">12</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Weight'</span>, fontsize <span class="op">=</span> <span class="dv">10</span>)<span class="op">;</span> plt.ylabel(<span class="st">'Make'</span>, fontsize <span class="op">=</span> <span class="dv">10</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>plt.xticks(fontsize <span class="op">=</span> <span class="dv">6</span>)<span class="op">;</span> plt.yticks(fontsize <span class="op">=</span> <span class="dv">6</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">1500</span>, <span class="dv">4000</span>)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-9-output-1.png" class="figure-img" width="673" height="418"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div id="23f41a2f" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------------- STACKED ----------------------------------</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>THEME <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/andrematte/matte-matplotlib/main/Matte.mplstyle'</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'default'</span>)<span class="op">;</span> plt.style.use(THEME)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">6</span>, <span class="dv">4</span>), dpi <span class="op">=</span> <span class="dv">120</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>sns.displot(data <span class="op">=</span> df, x <span class="op">=</span> <span class="st">"Length"</span>, color <span class="op">=</span> <span class="st">"Type"</span>, hue <span class="op">=</span> <span class="st">"Type"</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'STACKED BAR CHART'</span>, fontsize <span class="op">=</span> <span class="dv">12</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Manufacturer'</span>, fontsize <span class="op">=</span> <span class="dv">10</span>)<span class="op">;</span> plt.ylabel(<span class="st">'Frequency'</span>, fontsize <span class="op">=</span> <span class="dv">10</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">9</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;Figure size 720x480 with 0 Axes&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-10-output-2.png" class="figure-img" width="614" height="464"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div id="08e33c5c" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>THEME <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/dracula/matplotlib/master/dracula.mplstyle'</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'default'</span>)<span class="op">;</span> plt.style.use(THEME)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">6</span>, <span class="dv">4</span>), dpi<span class="op">=</span> <span class="dv">125</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>sns.boxplot(</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  data <span class="op">=</span> df, x <span class="op">=</span> <span class="st">"Type"</span>, y <span class="op">=</span> <span class="st">"Length"</span>, hue <span class="op">=</span> <span class="st">"Origin"</span>, palette <span class="op">=</span> [<span class="st">"#FF6B6B"</span>, <span class="st">"#45B7D1"</span>],</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  width <span class="op">=</span> <span class="fl">0.9</span>, gap <span class="op">=</span> <span class="fl">0.2</span>, linecolor <span class="op">=</span> <span class="st">"#E7F3FF"</span>, linewidth <span class="op">=</span> <span class="fl">0.7</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-11-output-1.png" class="figure-img" width="675" height="463"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<div id="7e06253c" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------------- HIST -------------------------------------</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> [<span class="st">'#FFFFFF'</span>, <span class="st">'#4F88D0'</span>, <span class="st">'#A8ED74'</span>, <span class="st">'#FF9A1E'</span>, <span class="st">'#FF4D74'</span>, <span class="st">'#E67BD4'</span>]</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>THEME <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/dracula/matplotlib/master/dracula.mplstyle'</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'default'</span>)<span class="op">;</span> plt.style.use(THEME)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">6</span>, <span class="dv">4</span>), dpi <span class="op">=</span> <span class="dv">120</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>sns.histplot(</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  data <span class="op">=</span> df, x <span class="op">=</span> <span class="st">"Length"</span>, hue <span class="op">=</span> <span class="st">"Type"</span>, bins <span class="op">=</span> <span class="dv">12</span>, kde <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  multiple <span class="op">=</span> <span class="st">"stack"</span>, fill <span class="op">=</span> <span class="va">True</span>, palette <span class="op">=</span> cols</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'HISTOGRAM'</span>, fontsize <span class="op">=</span> <span class="dv">12</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-12-output-1.png" class="figure-img" width="654" height="470"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-5-tab">
+<div id="f661e99d" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------- SCATTER ----------------------------------</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ==============================================================================</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> [<span class="st">'#FFFFFF'</span>, <span class="st">'#4F88D0'</span>, <span class="st">'#A8ED74'</span>, <span class="st">'#FF9A1E'</span>, <span class="st">'#FF4D74'</span>, <span class="st">'#E67BD4'</span>]</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>THEME <span class="op">=</span> <span class="st">'https://github.com/dhaitz/matplotlib-stylesheets/raw/master/pitayasmoothie-dark.mplstyle'</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'default'</span>)<span class="op">;</span> plt.style.use(THEME)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">6</span>, <span class="dv">4</span>), dpi<span class="op">=</span> <span class="dv">120</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>sns.jointplot(</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  data <span class="op">=</span> df, x <span class="op">=</span> <span class="st">"Price"</span>, y <span class="op">=</span> <span class="st">"Length"</span>, hue <span class="op">=</span> <span class="st">"Type"</span>, space <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  xlim <span class="op">=</span> (<span class="dv">7</span>, <span class="dv">49</span>), ylim <span class="op">=</span> (<span class="dv">140</span>, <span class="dv">220</span>), palette <span class="op">=</span> cols</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>) <span class="co"># scatterplot,</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'SCATTER PLOT'</span>, fontsize <span class="op">=</span> <span class="dv">12</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>plt.xticks(fontsize <span class="op">=</span> <span class="dv">6</span>)<span class="op">;</span> plt.yticks(fontsize <span class="op">=</span> <span class="dv">6</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>plt.legend(title <span class="op">=</span> <span class="st">'Type:'</span>, fontsize <span class="op">=</span> <span class="dv">8</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;Figure size 720x480 with 0 Axes&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-13-output-2.png" class="figure-img" width="581" height="586"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="plotly" class="level1">
+<h1><code>Plotly</code></h1>
+<p>Plotly es una librería de visualización de datos que permite crear gráficos interactivos, visualizaciones 3D y dashboards web. Su objetivo principal es ofrecer herramientas para la creación de visualizaciones que los usuarios puedan explorar de manera interactiva, lo que mejora la comprensión de los datos y facilita la presentación de resultados.</p>
+<section id="ventajas-2" class="level3">
+<h3 class="anchored" data-anchor-id="ventajas-2">Ventajas</h3>
+<ul>
+<li><strong>Interactividad:</strong> Los gráficos son altamente interactivos, permitiendo a los usuarios hacer clic, hacer zoom, arrastrar y filtrar datos.</li>
+<li><strong>Visualizaciones 3D:</strong> Soporta gráficos en 3D, lo que es útil para representar datos multidimensionales.</li>
+<li><strong>Facilidad de integración:</strong> Puede integrarse fácilmente con plataformas web y aplicaciones, lo que facilita la creación de dashboards y aplicaciones interactivas.</li>
+<li><strong>Amplia gama de gráficos:</strong> Ofrece una gran variedad de tipos de gráficos, desde gráficos básicos hasta visualizaciones avanzadas como mapas y gráficos de red.</li>
+</ul>
+</section>
+<section id="desventajas-2" class="level3">
+<h3 class="anchored" data-anchor-id="desventajas-2">Desventajas</h3>
+<ul>
+<li><strong>Complejidad de configuración:</strong> La configuración de algunas características interactivas y personalizaciones puede ser más compleja en comparación con otras librerías.</li>
+<li><strong>Rendimiento:</strong> Para conjuntos de datos extremadamente grandes o complejos, los gráficos interactivos pueden volverse lentos o poco responsivos.</li>
+<li><strong>Dependencia de JavaScript:</strong> Para aprovechar al máximo las capacidades de Plotly, es necesario entender algo de JavaScript y HTML, especialmente al integrar gráficos en aplicaciones web.</li>
+</ul>
+</section>
+<section id="extensiones-o-plugins" class="level3">
+<h3 class="anchored" data-anchor-id="extensiones-o-plugins">Extensiones o Plugins</h3>
+<ul>
+<li><a href="https://github.com/santosjorge/cufflinks">Cufflinks</a></li>
+</ul>
+</section>
+</section>
+<section id="bokeh" class="level1">
+<h1><code>Bokeh</code></h1>
+<p>Bokeh es una librería de visualización en Python que permite crear gráficos interactivos y aplicaciones web. Está diseñada para trabajar con grandes conjuntos de datos y se integra bien con otras librerías de datos como pandas. Bokeh proporciona una API que permite crear gráficos sofisticados y altamente interactivos que se pueden mostrar en navegadores web.</p>
+<section id="ventajas-3" class="level3">
+<h3 class="anchored" data-anchor-id="ventajas-3">Ventajas</h3>
+<ul>
+<li><strong>Interactividad:</strong> Bokeh permite crear gráficos altamente interactivos que responden a acciones del usuario como clics y desplazamientos, mejorando la exploración de datos.</li>
+<li><strong>Desempeño:</strong> Está diseñado para manejar grandes conjuntos de datos de manera eficiente y puede generar visualizaciones que se renderizan rápidamente en el navegador.</li>
+<li><strong>Flexibilidad:</strong> Ofrece una amplia gama de herramientas para personalizar gráficos, desde estilos básicos hasta configuraciones avanzadas para ajustarse a necesidades específicas.</li>
+<li><strong>Integración con web:</strong> Los gráficos y dashboards creados con Bokeh se pueden integrar fácilmente en aplicaciones web utilizando HTML y JavaScript.</li>
+</ul>
+</section>
+<section id="desventajas-3" class="level3">
+<h3 class="anchored" data-anchor-id="desventajas-3">Desventajas</h3>
+<ul>
+<li><strong>Curva de aprendizaje:</strong> La API de Bokeh puede ser más compleja que la de otras librerías como Matplotlib o Seaborn, especialmente cuando se trata de configuraciones avanzadas.</li>
+<li><strong>Limitaciones en gráficos 3D:</strong> Aunque Bokeh es excelente para gráficos 2D interactivos, tiene limitaciones en la creación de visualizaciones tridimensionales en comparación con otras librerías especializadas en 3D.</li>
+<li><strong>Compatibilidad:</strong> Aunque los gráficos se renderizan en navegadores web, puede haber problemas de compatibilidad o de rendimiento en navegadores más antiguos o menos comunes.</li>
+</ul>
+</section>
+<section id="extensiones-o-plugins-1" class="level3">
+<h3 class="anchored" data-anchor-id="extensiones-o-plugins-1">Extensiones o Plugins</h3>
+<ul>
+<li><a href="https://holoviews.org/index.html">Holoviews</a></li>
+<li><a href="https://panel.holoviz.org/index.html">Panel</a></li>
+</ul>
+<div id="467deea0" class="cell" data-execution_count="13">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bokeh.plotting <span class="im">import</span> figure, show</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">4000</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.random(size<span class="op">=</span>N) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.random.random(size<span class="op">=</span>N) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>radii <span class="op">=</span> np.random.random(size<span class="op">=</span>N) <span class="op">*</span> <span class="fl">1.5</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> np.array([(r, g, <span class="dv">150</span>) <span class="cf">for</span> r, g <span class="kw">in</span> <span class="bu">zip</span>(<span class="dv">50</span><span class="op">+</span><span class="dv">2</span><span class="op">*</span>x, <span class="dv">30</span><span class="op">+</span><span class="dv">2</span><span class="op">*</span>y)], dtype<span class="op">=</span><span class="st">"uint8"</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>TOOLS<span class="op">=</span><span class="st">"hover,crosshair,pan,wheel_zoom,zoom_in,zoom_out,box_zoom,undo,redo,reset,tap,save,box_select,poly_select,lasso_select,examine,help"</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> figure(tools<span class="op">=</span>TOOLS)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>p.circle(x, y, radius<span class="op">=</span>radii,</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>         fill_color<span class="op">=</span>colors, fill_alpha<span class="op">=</span><span class="fl">0.6</span>,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>         line_color<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co"># show(p)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div style="display: table;"><div style="display: table-row;"><div style="display: table-cell;"><b title="bokeh.models.renderers.glyph_renderer.GlyphRenderer">GlyphRenderer</b>(</div><div style="display: table-cell;">id&nbsp;=&nbsp;'p1057', <span id="p1061" style="cursor: pointer;">…)</span></div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">context_menu&nbsp;=&nbsp;None,</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">coordinates&nbsp;=&nbsp;None,</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">data_source&nbsp;=&nbsp;ColumnDataSource(id='p1051', ...),</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">glyph&nbsp;=&nbsp;Circle(id='p1054', ...),</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">group&nbsp;=&nbsp;None,</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">hover_glyph&nbsp;=&nbsp;None,</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">js_event_callbacks&nbsp;=&nbsp;{},</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">js_property_callbacks&nbsp;=&nbsp;{},</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">level&nbsp;=&nbsp;'glyph',</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">muted&nbsp;=&nbsp;False,</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">muted_glyph&nbsp;=&nbsp;Circle(id='p1056', ...),</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">name&nbsp;=&nbsp;None,</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">nonselection_glyph&nbsp;=&nbsp;Circle(id='p1055', ...),</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">propagate_hover&nbsp;=&nbsp;False,</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">selection_glyph&nbsp;=&nbsp;'auto',</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">subscribed_events&nbsp;=&nbsp;PropertyValueSet(),</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">syncable&nbsp;=&nbsp;True,</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">tags&nbsp;=&nbsp;[],</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">view&nbsp;=&nbsp;CDSView(id='p1058', ...),</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">visible&nbsp;=&nbsp;True,</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">x_range_name&nbsp;=&nbsp;'default',</div></div><div class="p1060" style="display: none;"><div style="display: table-cell;"></div><div style="display: table-cell;">y_range_name&nbsp;=&nbsp;'default')</div></div></div>
+<script>
+(function() {
+  let expanded = false;
+  const ellipsis = document.getElementById("p1061");
+  ellipsis.addEventListener("click", function() {
+    const rows = document.getElementsByClassName("p1060");
+    for (let i = 0; i < rows.length; i++) {
+      const el = rows[i];
+      el.style.display = expanded ? "none" : "table-row";
+    }
+    ellipsis.innerHTML = expanded ? "&hellip;)" : "&lsaquo;&lsaquo;&lsaquo;";
+    expanded = !expanded;
+  });
+})();
+</script>
+</div>
+</div>
+</section>
+</section>
+<section id="altair" class="level1">
+<h1><code>Altair</code></h1>
+<p>Altair es una librería de visualización declarativa en Python que se enfoca en facilitar la creación de gráficos y visualizaciones de datos mediante una API simple y basada en la especificación de intenciones. Utiliza la gramática de gráficos para describir cómo deben visualizarse los datos, lo que permite a los usuarios centrarse en el análisis y la representación de los datos en lugar de en la programación de gráficos detallados.</p>
+<section id="ventajas-4" class="level3">
+<h3 class="anchored" data-anchor-id="ventajas-4">Ventajas</h3>
+<ul>
+<li><strong>Sintaxis simple y declarativa:</strong> La API de Altair es fácil de usar y permite especificar visualizaciones mediante la declaración de intenciones en lugar de manipular detalles gráficos individuales.</li>
+<li><strong>Interactividad:</strong> Ofrece interactividad básica y permite la creación de gráficos que responden a acciones del usuario, como selección y zoom.</li>
+<li><strong>Visualización de datos:</strong> Diseñado para trabajar bien con grandes conjuntos de datos y soporta la visualización en diferentes formas de datos.</li>
+<li><strong>Integración con pandas:</strong> Se integra de forma nativa con DataFrames de pandas, facilitando la visualización de datos tabulares.</li>
+</ul>
+</section>
+<section id="desventajas-4" class="level3">
+<h3 class="anchored" data-anchor-id="desventajas-4">Desventajas</h3>
+<ul>
+<li><strong>Flexibilidad limitada:</strong> Aunque es fácil de usar para muchas tareas comunes, puede ser menos flexible para personalizaciones avanzadas en comparación con librerías más detalladas como Matplotlib o Plotly.</li>
+<li><strong>Interactividad avanzada:</strong> La interactividad proporcionada por Altair es más básica y puede no ser suficiente para aplicaciones que requieren interacciones complejas o personalizadas.</li>
+<li><strong>Dependencia del navegador:</strong> Las visualizaciones de Altair se renderizan en el navegador, lo que puede no ser ideal para todos los entornos de trabajo, especialmente si se necesita una visualización estática o en otros formatos.</li>
+</ul>
+<div id="0512953f" class="cell" data-execution_count="14">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> vega_datasets <span class="im">import</span> data</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>source <span class="op">=</span> data.cars()</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>brush <span class="op">=</span> alt.selection_interval()</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>points <span class="op">=</span> alt.Chart(source).mark_point().encode(</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'Horsepower'</span>,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'Miles_per_Gallon'</span>,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span>alt.condition(brush, <span class="st">'Origin'</span>, alt.value(<span class="st">'lightgray'</span>))</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>).add_params(</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    brush</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>bars <span class="op">=</span> alt.Chart(source).mark_bar().encode(</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'Origin'</span>,</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'Origin'</span>,</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'count(Origin)'</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>).transform_filter(</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    brush</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>points <span class="op">&amp;</span> bars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg ansi-bold">ModuleNotFoundError</span>                       Traceback (most recent call last)
+Cell <span class="ansi-green-fg ansi-bold">In[14], line 2</span>
+<span class="ansi-green-fg">      1</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> <span style="font-weight:bold;color:rgb(0,0,255)">altair</span> <span style="font-weight:bold;color:rgb(0,135,0)">as</span> <span style="font-weight:bold;color:rgb(0,0,255)">alt</span>
+<span class="ansi-green-fg ansi-bold">----&gt; 2</span> <span style="font-weight:bold;color:rgb(0,135,0)">from</span> <span style="font-weight:bold;color:rgb(0,0,255)">vega_datasets</span> <span style="font-weight:bold;color:rgb(0,135,0)">import</span> data
+<span class="ansi-green-fg">      4</span> source <span style="color:rgb(98,98,98)">=</span> data<span style="color:rgb(98,98,98)">.</span>cars()
+<span class="ansi-green-fg">      6</span> brush <span style="color:rgb(98,98,98)">=</span> alt<span style="color:rgb(98,98,98)">.</span>selection_interval()
+
+<span class="ansi-red-fg ansi-bold">ModuleNotFoundError</span>: No module named 'vega_datasets'</pre>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -187,6 +977,150 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
